@@ -49,7 +49,19 @@ export default function SideNavigation({ }) {
       <div className={`z-50 fixed inset-0 w-12 bg-slate-800 text-white flex flex-col transform  
       duration-600 transition-all`}   >
         <div className="p-4 text-lg font-bold text-center">
-          <div className="border shadow-xl border-indigo-500/50"></div></div>
+          <div className="border shadow-xl border-indigo-500/50">
+            <div className="mx-5">
+              <Image
+                className=""
+                src="/images/nut.jpg"
+                alt="me"
+                width={90} // กำหนดความกว้างของรูปภาพ
+                height={0} // ปล่อยค่า height เป็น auto โดย Next.js จะจัดการเอง
+                style={{ height: 'auto' }} // กำหนดให้ความสูงปรับตามสัดส่วนของภาพ
+                priority // ใช้ให้ Next.js โหลดภาพนี้เป็น priority
+              />
+            </div>
+          </div></div>
 
         <nav className="flex flex-col space-y-2">
           <button><Link href="/"><div
@@ -64,19 +76,26 @@ export default function SideNavigation({ }) {
           <button><Link href="/addproduct"><div
             className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
           ><div className="flex">
-              <i className="material-icons items-center flex ">stars</i>
+              <i className="material-icons items-center flex ">account_tree</i>
 
             </div>
           </div></Link></button>
 
 
           <button><Link href="/profile">
-          <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
-          ><div className="flex">
-              <i className="material-icons items-center flex ">person</i>
+            <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
+            ><div className="flex">
+                <i className="material-icons items-center flex ">code_off</i>
 
-            </div>
-          </div></Link></button>
+              </div>
+            </div></Link></button>
+          <button><Link href="/profile">
+            <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
+            ><div className="flex">
+                <i className="material-icons items-center flex ">perm_contact_calendar</i>
+
+              </div>
+            </div></Link></button>
 
           <button><Link href="/dashboard">
             <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
