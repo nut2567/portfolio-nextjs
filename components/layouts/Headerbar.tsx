@@ -5,7 +5,7 @@ export default function Layout({ }) {
 
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-      <div className="w-full pl-24 flex font-semibold justify-between items-center p-3 px-5 text-sm">
+      <div className="w-full pl-24 flex font-semibold justify-between items-center p-3 text-sm">
         <div className="flex gap-5"><p>Portfolio</p><p>Nutthawat Witdumring</p></div>
 
         <div><div className="flex justify-center items-center w-full"> powered by

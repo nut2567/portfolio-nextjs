@@ -1,19 +1,46 @@
-import { Suspense } from 'react'
-export default function Git() {
+"use client"
+import {
+    Key, Suspense, useEffect, useState
+} from 'react'
+import Loading from '../git/loading'
+async function getRepositories() {
+    return;
+
+}
+export default function About() {
+    const [repositories, setRepositories] = useState([]);
+
+    const initRepositories = async () => {
+        try {
+
+            const res = await getRepositories()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    useEffect(() => {
+        initRepositories()
+    }, []);
+
     return (
-
-        <div className="flex flex-col gap-4">
-            <Suspense fallback={<div></div>}>
-                <h3 className="text-foreground">Git</h3>
-                <div className="flex flex-col gap-2">
-                    <p>
-                        Git is a free and open source distributed version control
-                        system designed to handle everything from small to very large
-                        projects with speed and efficiency.
-                    </p>
-
+        <div>
+            <Suspense fallback={<Loading />}>
+                <div className="bg-gray-800 text-white w-full p-6 rounded-lg text-xl mb-4">
+                    <ul className="list-none space-y-2">
+                        <h1 className="text-xl font-bold text-blue-400">Repositories for nut2567</h1>
+                    </ul>
                 </div>
+                <ul>
+                    {/* {repositories.map((repo: { id: Key, html_url: string; name: string; }) => (
+                        <li key={repo.id}>
+                            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                                {repo.name}
+                            </a>
+                        </li>
+                    ))} */}
+
+                </ul>
             </Suspense>
         </div>
-    )
+    );
 }   

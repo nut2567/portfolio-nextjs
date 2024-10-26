@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'; // นำเข้า useEffect และ useState จาก react
 import Link from "next/link";
 import Swal from 'sweetalert2';
-import Image from "next/image";
 import { useRouter } from 'next/navigation';
 
 export default function SideNavigation({ }) {
@@ -50,21 +49,11 @@ export default function SideNavigation({ }) {
       duration-600 transition-all`}   >
         <div className="p-4 text-lg font-bold text-center">
           <div className="border shadow-xl border-indigo-500/50">
-            <div className="mx-5">
-              <Image
-                className=""
-                src="/images/nut.jpg"
-                alt="me"
-                width={90} // กำหนดความกว้างของรูปภาพ
-                height={0} // ปล่อยค่า height เป็น auto โดย Next.js จะจัดการเอง
-                style={{ height: 'auto' }} // กำหนดให้ความสูงปรับตามสัดส่วนของภาพ
-                priority // ใช้ให้ Next.js โหลดภาพนี้เป็น priority
-              />
-            </div>
+            
           </div></div>
 
         <nav className="flex flex-col space-y-2">
-          <button><Link href="/"><div
+          <button title={`Home`}><Link href="/"><div
             className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
           >
             <div className="flex">
@@ -73,7 +62,7 @@ export default function SideNavigation({ }) {
             </div>
           </div></Link></button>
 
-          <button><Link href="/git"><div
+          <button title={`GitHub`}><Link href="/git"><div
             className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
           ><div className="flex">
               <i className="material-icons items-center flex ">account_tree</i>
@@ -82,14 +71,14 @@ export default function SideNavigation({ }) {
           </div></Link></button>
 
 
-          <button><Link href="/projects">
+          <button title={`Projects`}><Link href="/projects">
             <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
             ><div className="flex">
                 <i className="material-icons items-center flex ">code_off</i>
 
               </div>
             </div></Link></button>
-          <button><Link href="/about">
+          <button title={`About`}><Link href="/about">
             <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
             ><div className="flex">
                 <i className="material-icons items-center flex ">perm_contact_calendar</i>
@@ -97,7 +86,7 @@ export default function SideNavigation({ }) {
               </div>
             </div></Link></button>
 
-          <button><Link href="/contact">
+          <button title={`Contact`}><Link href="/contact">
             <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center"
             ><div className="flex">
                 <i className="material-icons items-center flex ">dashboard</i>
