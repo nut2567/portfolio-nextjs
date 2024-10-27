@@ -3,30 +3,7 @@ import { Key, Suspense, useEffect, useState } from 'react'
 import { gql } from '@apollo/client'
 import Loading from '../git/loading'
 async function getRepositories() {
-    const query = gql`query {
-    viewer {
-      contributionsCollection {
-        totalCommitContributions
-        totalIssueContributions
-        totalPullRequestContributions
-        totalPullRequestReviewContributions
-      }
-    }
-  }
-  `
-    // เรียกใช้งาน GraphQL API
-    const res = await fetch('https://api.github.com/graphql', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`, // ใส่ Token ของคุณแทนที่ process.env.GITHUB_TOKEN
-        },
-        body: JSON.stringify({ query }),
-    })
 
-    const json = await res.json()
-    console.log(json)
-    // const viewer = json.data.viewer;
 }
 export default function About() {
     const [repositories, setRepositories] = useState([])

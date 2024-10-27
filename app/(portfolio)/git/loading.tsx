@@ -1,19 +1,22 @@
 export default function Loading() {
-  return (
-    <div className="flex-col text-center flex items-center  justify-center h-dvh">
-      {' '}
-      Loading...
-      <span className="loading loading-spinner loading-lg  text-info"></span>
-      <div className="flex w-52 flex-col gap-4">
-        <div className="flex items-center gap-4">
-          <div className="skeleton h-16 w-16 shrink-0 rounded-full"></div>
-          <div className="flex flex-col gap-4">
-            <div className="skeleton h-4 w-20"></div>
-            <div className="skeleton h-4 w-28"></div>
-          </div>
+    return (
+        <div className="flex-col text-center flex h-dvh">
+            Loading...
+            <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                <div className="animate-pulse flex space-x-4">
+                    <div className="rounded-full bg-slate-700 h-10 w-10"></div>
+                    <div className="flex-1 space-y-6 py-1">
+                        <div className="h-2 bg-slate-700 rounded"></div>
+                        <div className="space-y-3">
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="h-2 bg-slate-700 rounded col-span-2"></div>
+                                <div className="h-2 bg-slate-700 rounded col-span-1"></div>
+                            </div>
+                            <div className="h-2 bg-slate-700 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="skeleton h-32 w-full"></div>
-      </div>
-    </div>
-  )
+    )
 }
