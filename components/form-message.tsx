@@ -1,5 +1,4 @@
-export type Message =
-  { message: string ,success: string, error: string }  ;
+export type Message = { message: string; success: string; error: string }
 
 export function FormMessage({ message }: { message: Message }) {
   return (
@@ -18,5 +17,5 @@ export function FormMessage({ message }: { message: Message }) {
         <div className="text-foreground border-l-2 px-4">{message.message}</div>
       )}
     </div>
-  );
+  )
 }

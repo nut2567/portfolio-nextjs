@@ -1,5 +1,4 @@
-
-export default function Header({ }) {
+export default function Header({}) {
   return (
     <head>
       <link
@@ -8,5 +7,4 @@ export default function Header({ }) {
       />
     </head>
   )
-
 }

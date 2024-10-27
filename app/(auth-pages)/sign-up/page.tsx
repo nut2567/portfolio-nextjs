@@ -1,10 +1,10 @@
-import { signUpAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import { SmtpMessage } from "../smtp-message";
+import { signUpAction } from '@/app/actions'
+import { FormMessage, Message } from '@/components/form-message'
+import { SubmitButton } from '@/components/submit-button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import Link from 'next/link'
+import { SmtpMessage } from '../smtp-message'
 
 export default function Signup({ searchParams }: { searchParams: Message }) {
   if (!searchParams.message) {
@@ -12,7 +12,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
       <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
         <FormMessage message={searchParams} />
       </div>
-    );
+    )
   }
 
   return (
@@ -20,7 +20,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
       <form className="flex flex-col min-w-64 max-w-64 mx-auto">
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Link className="text-primary font-medium underline" href="/sign-in">
             Sign in
           </Link>
@@ -45,7 +45,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
       <SmtpMessage />
       <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
         <p>
-          Powered by{" "}
+          Powered by{' '}
           <a
             href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
             target="_blank"
@@ -57,5 +57,5 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
         </p>
       </footer>
     </>
-  );
+  )
 }
