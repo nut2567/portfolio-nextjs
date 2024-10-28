@@ -18,7 +18,7 @@ export default async function Git() {
           name
           url
           stargazerCount
-          forkCount // ดึงข้อมูล forkCount
+          forkCount 
           isPrivate
           primaryLanguage {
             name
