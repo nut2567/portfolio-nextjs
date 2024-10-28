@@ -11,6 +11,7 @@ export default function Socials() {
       link: 'https://linkedin.com/in/nutthawat-witdumrong-a58933277',
     },
     { name: 'Facebook', link: 'https://www.facebook.com/nutthawat.witdumrong' },
+    { name: 'Jobbkk', link: 'https://www.jobbkk.com/resumes/preview_new/3815993' },
   ]
 
   return (
