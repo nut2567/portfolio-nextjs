@@ -1,12 +1,14 @@
 // components/Repositories.tsx (Client Component)
-'use client' // ตรงนี้เป็น Client Component
+'use client'
 import React from 'react'
 
 export default function Repositories({
   repositories,
+  data, projects
 }: {
-  repositories: any[]
+  repositories: any[],
+  data: any, projects: any[]
 }) {
-  console.log(repositories)
+  console.log(repositories, data, projects)
   return <div className="contributions-grid"></div>
 }

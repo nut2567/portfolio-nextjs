@@ -1,8 +1,52 @@
-import { Key, Suspense } from 'react'
-import Loading from './loading'
-import Image from 'next/image'
-import Repositories from './repositories'
-import prettier from 'prettier'
+import { Key, Suspense } from 'react';
+import Loading from './loading';
+import Image from 'next/image';
+import Repositories from './repositories';
+import prettier from 'prettier';
+
+interface Repository {
+    id: string;
+    name: string;
+    url: string;
+    stargazerCount: number;
+    forkCount: number;
+    watchers: number;
+    refs: {
+        nodes: {
+            name: string;
+            target: {
+                history?: {
+                    totalCount: number;
+                };
+            };
+        }[];
+    };
+}
+
+interface Viewer {
+    login: string;
+    avatarUrl: string;
+    url: string;
+    repositories: {
+        nodes: Repository[];
+    };
+    contributionsCollection: {
+        totalCommitContributions: number;
+        totalIssueContributions: number;
+        totalPullRequestContributions: number;
+        totalPullRequestReviewContributions: number;
+        contributionCalendar: {
+            totalContributions: number;
+            weeks: {
+                contributionDays: {
+                    date: string;
+                    contributionCount: number;
+                    color: string;
+                }[];
+            }[];
+        };
+    };
+}
 
 export default async function Git() {
     // สร้าง GraphQL query
@@ -18,7 +62,7 @@ export default async function Git() {
           name
           url
           stargazerCount
-          forkCount 
+          forkCount
           isPrivate
           primaryLanguage {
             name
@@ -61,9 +105,9 @@ export default async function Git() {
       }
     }
   }
-`
+`;
     // Format the query using Prettier
-    const formattedQuery = prettier.format(query, { parser: 'graphql' })
+    const formattedQuery = prettier.format(query, { parser: 'graphql' });
 
     // เรียกใช้งาน GraphQL API
     const res = await fetch('https://api.github.com/graphql', {
@@ -73,29 +117,31 @@ export default async function Git() {
             Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, // ใส่ Token ของคุณแทนที่ process.env.GITHUB_TOKEN
         },
         body: JSON.stringify({ query }),
-    })
+    });
 
-    const json = await res.json()
-    const viewer = json.data.viewer
-    const repositories = viewer.repositories.nodes
-    const contributionsCollection = viewer.contributionsCollection
-    const contributionCalendar = contributionsCollection.contributionCalendar
-    const totalContributions = contributionCalendar.totalContributions
-    const contributionWeeks = contributionCalendar.weeks
+    const json = await res.json();
+    const viewer: Viewer = json.data.viewer;
+    const repositories: Repository[] = viewer.repositories.nodes;
+    const contributionsCollection = viewer.contributionsCollection;
+    const contributionCalendar = contributionsCollection.contributionCalendar;
+    const totalContributions = contributionCalendar.totalContributions;
+    const contributionWeeks = contributionCalendar.weeks;
 
     // ดึงข้อมูล watchers สำหรับแต่ละ repository
-    const repositoriesWithWatchers = await Promise.all(repositories.map(async (repo: any) => {
-        const repoResponse = await fetch(`https://api.github.com/repos/${viewer.login}/${repo.name}`, {
-            headers: {
-                Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-            },
-        });
-        const repoData = await repoResponse.json();
-        return {
-            ...repo,
-            watchers: repoData.watchers_count, // เพิ่ม watchers
-        };
-    }));
+    const repositoriesWithWatchers = await Promise.all(
+        repositories.map(async (repo) => {
+            const repoResponse = await fetch(`https://api.github.com/repos/${viewer.login}/${repo.name}`, {
+                headers: {
+                    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+                },
+            });
+            const repoData = await repoResponse.json();
+            return {
+                ...repo,
+                watchers: repoData.watchers_count, // เพิ่ม watchers
+            };
+        })
+    );
 
     return (
         <div>
@@ -109,7 +155,7 @@ export default async function Git() {
                                 alt="me"
                                 width={50}
                                 height={0}
-                                style={{ height: 'auto' }}
+                                style={{ width: "100%", height: "auto" }}
                                 priority
                             />
                         </div>
@@ -121,19 +167,17 @@ export default async function Git() {
                     </ul>
                 </div>
                 <ul>
-                    {repositoriesWithWatchers.map(
-                        (repo: any) => (
-                            <li key={repo.id}>
-                                <a
-                                    href={repo.html_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {repo.name} - ⭐ {repo.stargazerCount} - 👁️ {repo.watchers} watchers - 🍴 {repo.forkCount} forks
-                                </a>
-                            </li>
-                        )
-                    )}
+                    {repositoriesWithWatchers.map((repo: Repository) => (
+                        <li key={repo.id}>
+                            <a
+                                href={repo.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {repo.name} - ⭐ {repo.stargazerCount} - 👁️ {repo.watchers} watchers - 🍴 {repo.forkCount} forks
+                            </a>
+                        </li>
+                    ))}
                 </ul>
                 <Repositories
                     repositories={repositoriesWithWatchers}
@@ -145,8 +189,8 @@ export default async function Git() {
             <h1>{`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`}</h1>
             <Suspense>
                 <div>
-                    {repositoriesWithWatchers.map((repo: any) => {
-                        const totalCommits = repo.refs.nodes.reduce((sum: number, branch: any) => {
+                    {repositoriesWithWatchers.map((repo) => {
+                        const totalCommits = repo.refs.nodes.reduce((sum: number, branch) => {
                             return sum + (branch.target.history ? branch.target.history.totalCount : 0);
                         }, 0);
 
@@ -154,15 +198,15 @@ export default async function Git() {
                             <div key={repo.name}>- ⭐ {repo.stargazerCount} - 👁️ {repo.watchers} watchers - 🍴 {repo.forkCount} forks
                                 <h2>{repo.name}</h2>
                                 <p>Total Commits: {totalCommits}</p>
-                                {repo.refs.nodes.map((branch: any) => (
+                                {repo.refs.nodes.map((branch) => (
                                     <div key={branch.name} style={{ display: 'flex', alignItems: 'center' }}>
                                         <p>{branch.name}</p>
-                                        <p>{branch.target.history.totalCount} commits</p>
+                                        <p>{branch.target.history?.totalCount} commits</p>
                                         <div style={{
-                                            width: `${branch.target.history.totalCount * 10}px`,
+                                            width: `${branch.target.history?.totalCount ? branch.target.history.totalCount * 10 : 0}px`,
                                             height: '10px',
                                             backgroundColor: 'green',
-                                            marginLeft: '8px'
+                                            marginLeft: '8px',
                                         }}></div>
                                     </div>
                                 ))}
@@ -172,5 +216,5 @@ export default async function Git() {
                 </div>
             </Suspense>
         </div>
-    )
+    );
 }

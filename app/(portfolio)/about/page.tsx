@@ -1,7 +1,7 @@
 'use client'
-import { Key, Suspense, useEffect, useState } from 'react'
-import { gql } from '@apollo/client'
+import { Suspense, useEffect, useState } from 'react'
 import Loading from '../git/loading'
+import Image from 'next/image';
 async function getRepositories() {
 
 }
@@ -24,8 +24,19 @@ export default function About() {
             <Suspense fallback={<Loading />}>
                 <div className="bg-gray-800 text-white w-full p-6 rounded-lg text-xl mb-4">
                     <ul className="list-none space-y-2">
+                        <div className="mx-5">
+                            <Image
+                                className="rounded-full"
+                                src="/images/nut.jpg"
+                                alt="me"
+                                width={50}
+                                height={0}
+                                style={{ width: "100%", height: "auto" }}
+                                priority
+                            />
+                        </div>
                         <h1 className="text-xl font-bold text-blue-400">
-                            Repositories for nut2567
+                            Content commingsoon.......
                         </h1>
                     </ul>
                 </div>
