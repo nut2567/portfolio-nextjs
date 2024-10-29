@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
-import { ThemeSwitcher } from '@/components/theme-switcher'
-export default function Layout({}) {
+import { ThemeSwitcher } from '@/components/supabase/theme-switcher'
+export default function Layout({ }) {
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
       <div className="w-full pl-24 flex font-semibold justify-between items-center p-3 text-sm">
