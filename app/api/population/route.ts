@@ -6,6 +6,7 @@ export async function GET(request: Request) {
     // อ่านปีจาก query parameters
     const url = new URL(request.url);
     const year = parseInt(url.searchParams.get('year') || '');
+    const steb = parseInt(url.searchParams.get('steb') || '') || 1;
 
     if (isNaN(year)) {
       return NextResponse.json({ error: 'Invalid year parameter' }, { status: 400 });
@@ -19,7 +20,7 @@ export async function GET(request: Request) {
       .map(row => ({
         Country: row["Country name"],
         Year: row.Year,
-        Population: row.Population,
+        Population: row.Population / steb,
       }))
       .sort((a, b) => b.Population - a.Population) // เรียงลำดับประชากรจากมากไปน้อย
       .slice(0, 13); // เลือกเฉพาะ 12 อันดับแรก

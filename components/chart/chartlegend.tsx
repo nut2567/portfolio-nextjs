@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, registerables } from 'chart.js';
+import { Chart as ChartJS, registerables } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import Loading from '@/app/(portfolio)/git/loading';
 import ErrorComponent from '@/components/ErrorComponent';
 
-ChartJS.register(...registerables);
+ChartJS.register(...registerables, ChartDataLabels);
 
 interface PopulationData {
     Country: string;
@@ -37,13 +38,7 @@ const PopulationGrowthGraph = () => {
     const [continentCountries, setContinentCountries] = useState<Record<string, string[]>>({});
 
     useEffect(() => {
-        const fetchInitialData = async () => {
-            const year = 1950;
-            const initialData = await fetchPopulationData(year, 1);
-            updateChartData(initialData);
-            setLoading(false);
-        };
-        fetchInitialData();
+        setLoading(false);
     }, []);
 
 
@@ -117,24 +112,30 @@ const PopulationGrowthGraph = () => {
     useEffect(() => {
         const year = years[currentYearIndex];
         console.log('year', year, currentYearIndex);
-        setTimeout(() => {
-            fetchPopulationData(year, 3)
-                .then((data) => {
-                    updateChartData(data);
-                })
-        }, 333);
-        setTimeout(() => {
-            fetchPopulationData(year, 2)
-                .then((data) => {
-                    updateChartData(data);
-                })
-        }, 333);
-        setTimeout(() => {
-            fetchPopulationData(year, 1)
-                .then((data) => {
-                    updateChartData(data);
-                })
-        }, 333);
+        // setTimeout(() => {
+        //     fetchPopulationData(year, 4)
+        //         .then((data) => {
+        //             updateChartData(data);
+        //         })
+        // }, 250);
+        // setTimeout(() => {
+        //     fetchPopulationData(year, 3)
+        //         .then((data) => {
+        //             updateChartData(data);
+        //         })
+        // }, 500);
+        // setTimeout(() => {
+        //     fetchPopulationData(year, 2)
+        //         .then((data) => {
+        //             updateChartData(data);
+        //         })
+        // }, 750);
+        // setTimeout(() => {
+        fetchPopulationData(year, 1)
+            .then((data) => {
+                updateChartData(data);
+            })
+        // }, 1000);
 
 
     }, [currentYearIndex]);
@@ -152,7 +153,7 @@ const PopulationGrowthGraph = () => {
                         return 0;
                     }
                 });
-            }, 1000);
+            }, 200);
             setIntervalId(id);
         }
     };
@@ -172,25 +173,35 @@ const PopulationGrowthGraph = () => {
     };
 
 
-    const options = {
+    const options: any = {
         responsive: true,
         indexAxis: 'y' as const,
         plugins: {
             legend: {
                 display: false,
             },
+            datalabels: {
+                display: true,
+                color: '#FFF',        // สีของตัวเลข
+                font: {
+                    weight: 'bold',
+                },
+                anchor: 'end',         // ตำแหน่ง anchor ของ label
+                align: 'top',          // จัดตำแหน่ง label ให้ด้านบนของแท่ง
+                formatter: (value: number) => value.toLocaleString(), // ฟอร์แมตตัวเลข
+            },
         },
         animation: {
             onComplete: () => {
                 // code สำหรับสิ่งที่คุณต้องการทำเมื่อ animation เสร็จสิ้น
             },
-            // delay: (context: any) => {
-            //     let delay = 0;
-            //     if (context.type === 'data' && context.mode === 'default') {
-            //         delay = context.dataIndex * 300; // ตั้งค่า delay ตาม index ของข้อมูล
-            //     }
-            //     return delay;
-            // },
+            delay: (context: any) => {
+                let delay = 0;
+                if (context.type === 'data' && context.mode === 'default') {
+                    delay = context.dataIndex * 300; // ตั้งค่า delay ตาม index ของข้อมูล
+                }
+                return delay;
+            },
         },
         scales: {
             x: {
