@@ -13,6 +13,8 @@ interface PopulationData {
     Population: number;
 }
 
+
+
 const ChartComponent = () => {
     const [data, setData] = useState<PopulationData[]>([]);
     const [loading, setLoading] = useState(true);
@@ -40,6 +42,7 @@ const ChartComponent = () => {
         fetchData();
     }, []);
 
+
     useEffect(() => {
         const uniqueYears = Array.from(new Set(data.map(row => row.Year))).sort((a, b) => a - b);
         setYears(uniqueYears);
@@ -48,68 +51,78 @@ const ChartComponent = () => {
     if (loading) return <Loading />;
     if (error) return <div><ErrorComponent message={error} /></div>;
 
-    // จัดกลุ่มข้อมูลตามประเทศและรวมประชากร, กรอง World ออก
     const groupedData = data.reduce((acc, row) => {
-        if (row.Country === "World") return acc; // ข้าม World
         acc[row.Country] = (acc[row.Country] || 0) + row.Population;
         return acc;
     }, {} as Record<string, number>);
 
-
-    // ดึงข้อมูลประชากรของ World ออกมาแยกต่างหาก
-    const worldPopulation = data.find(row => row.Country === "World")?.Population || 0;
-
-
     const sortedCountries = Object.entries(groupedData)
-        .sort(([, a], [, b]) => b - a) // เรียงจากมากไปน้อย
-        .slice(0, 12) // เอาแค่ 12 อันดับแรก
-        .map(([country]) => country); // ดึงชื่อประเทศ
+        .sort(([, a], [, b]) => b - a)
+        .filter(([country]) => country !== "World")
+        .slice(0, 12)
+        .map(([country]) => country);
 
+    const alternateColors = ["#3b82f6", "#f87171", "#10b981", "#fbbf24", "#6366f1"]; // ตัวอย่างสีสลับกัน
     const chartData = {
         labels: sortedCountries,
         datasets: [
             {
                 label: 'Total Population',
                 data: sortedCountries.map(country => groupedData[country]),
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                backgroundColor: sortedCountries.map((_, index) => alternateColors[index % alternateColors.length]), // สีสลับตามลำดับ
             },
         ],
     };
 
-
-    const options = {
-        indexAxis: 'y' as const, // กำหนดให้แกน X เป็นแนวนอน
+    const options: any = {
+        responsive: true,
+        indexAxis: 'y' as const,
+        animation: {
+            onComplete: () => {
+                // code สำหรับสิ่งที่คุณต้องการทำเมื่อ animation เสร็จสิ้น
+            },
+            delay: (context: any) => {
+                let delay = 0;
+                if (context.type === 'data' && context.mode === 'default') {
+                    delay = context.dataIndex * 300; // ตั้งค่า delay ตาม index ของข้อมูล
+                }
+                return delay;
+            },
+        },
         scales: {
             x: {
                 title: {
                     display: true,
-                    text: 'Population', // แสดงชื่อแกน X
+                    text: 'Population',
                 },
             },
             y: {
                 title: {
                     display: true,
-                    text: 'Country', // แสดงชื่อแกน Y
+                    text: 'Country',
                 },
             },
         },
     };
 
-
     return (
-        <div style={{ position: 'relative' }}>
-            <h2>Top 12 Countries by Population</h2>
-            <Bar data={chartData} options={options} />
-            <div style={{ position: 'absolute', bottom: 150, right: 0, fontSize: '16px', fontWeight: 'bold', padding: '10px' }}>
-                World Population: {worldPopulation.toLocaleString()}
+        <div>
+
+            <div className="bg-gray-800 text-white w-full p-6 rounded-lg text-xl mb-4">
+                <ul className="list-none space-y-2">
+                    <h1 className="text-xl font-bold text-blue-400">
+                        แสดงข้อมูล Total population growth country 1950 to 2021
+                    </h1>
+                </ul>
             </div>
-            {/* เส้นไทม์ไลน์ที่แสดงทุก 5 ปี */}
-            <div className="flex justify-between items-center mt-8 mx-4 border-t-2 border-dashed border-gray-400 pt-4">
-                {years.filter(year => year % 5 === 0).map((year) => (
-                    <span key={year} className="text-xs text-gray-600">
-                        {year}
-                    </span>
-                ))}
+
+            <div style={{ position: 'relative' }} className='mb-20'>
+                <h2>Top 12 Countries by Population</h2>
+                <Bar data={chartData} options={options} />
+                <div style={{ position: 'absolute', bottom: 150, right: 0, fontSize: '16px', fontWeight: 'bold', padding: '10px' }}>
+                    <h1>World Population: {groupedData["World"]?.toLocaleString() || 'N/A'}</h1>
+                    <h1>1950-2021</h1>
+                </div>
             </div>
         </div>
     );
