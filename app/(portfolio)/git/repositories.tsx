@@ -11,20 +11,21 @@ export default function Repositories({
   console.log(repositories, contributionWeeks, viewer)
 
   return (
-    <div className="contributions-grid">
-      {contributionWeeks.map((week: any, weekIndex: number) => (
-        <div key={weekIndex} className="week-row">
-          {week.contributionDays.map((day: any, dayIndex: number) => (
-            <div
-              key={dayIndex}
-              className="day-cell"
-              style={{ backgroundColor: day.color }}
-              title={`${day.contributionCount} contributions on ${day.date}`}
-            />
-          ))}
-        </div>
-      ))}
-      <style jsx>{`
+    <div className="flex items-center justify-center">
+      <div className="contributions-grid rotate-180">
+        {contributionWeeks.map((week: any, weekIndex: number) => (
+          <div key={weekIndex} className="week-row">
+            {week.contributionDays.map((day: any, dayIndex: number) => (
+              <div
+                key={dayIndex}
+                className="day-cell"
+                style={{ backgroundColor: day.color }}
+                title={`${day.contributionCount} contributions on ${day.date}`}
+              />
+            ))}
+          </div>
+        ))}
+        <style jsx>{`
         .contributions-grid {
           display: inline-grid;
           grid-template-columns: repeat(
@@ -46,6 +47,7 @@ export default function Repositories({
           opacity: 0.8;
         }
       `}</style>
+      </div>
     </div>
   )
 }

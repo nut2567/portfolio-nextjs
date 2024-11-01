@@ -31,13 +31,6 @@ const ProjectList = async () => {
 }
 
 export default async function Git() {
-    const res = await fetch('https://api.github.com/user/repos', {
-        headers: {
-            Authorization: `token ${process.env.GITHUB_TOKEN}`, // ใส่ Token ของคุณแทนที่ YOUR_PERSONAL_ACCESS_TOKEN
-        },
-    })
-
-    const repositories = await res.json()
 
 
 
@@ -68,7 +61,9 @@ export default async function Git() {
 
 
     return (
-        <div>
+        <div className='-m-12 p-12 h-dvh'
+            style={{ background: "linear-gradient(90deg, #001930 0%, #00488a 35%, #00488a 50%, #00488a 65%, #001930)" }}
+        >
             <Suspense fallback={<Loading />}>
                 <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
                     <ul className="list-none space-y-2 flex items-center gap-4">
@@ -83,36 +78,21 @@ export default async function Git() {
                                 priority // ใช้ให้ Next.js โหลดภาพนี้เป็น priority
                             />
                         </div>
-                        <h1 className="text-xl font-bold text-blue-400">
-                            Repositories for nut2567
-                        </h1>
-                        <h1> {repositories.length} repositories</h1>
+                        <h1 className="text-3xl font-bold mb-4">Projects</h1>
                     </ul>
                 </div>
-                <Repositories repositories={repositories}
+                <Repositories repositories={[]}
                     data={vercelProjectsData}
                     projects={projects} />
                 <ul>
-                    {repositories.map(
-                        (repo: { id: Key; html_url: string; name: string }) => (
-                            <li key={repo.id}>
-                                <a
-                                    href={repo.html_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {repo.name}
-                                </a>
-                            </li>
-                        )
-                    )}
                 </ul>
-            </Suspense>
-
-            <Suspense>
                 <div className="container mx-auto p-4">
-                    <h1 className="text-3xl font-bold mb-4">Projects</h1>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className=' flex'><h1 className="text-xl font-bold text-blue-200 mb-5">
+                        Project other Environment on Vercel {projects.length} projects
+                    </h1></div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                    >
                         {projects.map((project: Project) => (
                             <ProjectCard key={project.id} project={project} />
                         ))}

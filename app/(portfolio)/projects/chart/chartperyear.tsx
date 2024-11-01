@@ -282,7 +282,7 @@ const PopulationGrowthGraph = () => {
                 </ul>
             </div>
             <div className="flex gap-5 mr-6 items-center justify-center">
-                <p>legend</p>
+                <p className='font-bold'>Region</p>
                 {Object.keys(continentCountries).map((key, index) => (
                     <div
                         key={index}

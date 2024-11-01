@@ -144,7 +144,7 @@ export default async function Git() {
     );
 
     return (
-        <div>
+        <div className='rounded-lg '>
             <Suspense fallback={<Loading />}>
                 <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
                     <ul className="list-none space-y-2 flex items-center gap-4">

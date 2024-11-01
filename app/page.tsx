@@ -2,9 +2,9 @@ import Hero from '@/components/supabase/hero'
 import ConnectSupabaseSteps from '@/components/tutorial/connect-supabase-steps'
 import SignUpUserSteps from '@/components/tutorial/sign-up-user-steps'
 import { hasEnvVars } from '@/utils/supabase/check-env-vars'
-import ChartComponent from '@/components/chart/chartjs'
-import PopulationGrowthGraph from '@/components/chart/chartperyear'
-import Chartlegend from '@/components/chart/chartlegend'
+import ChartComponent from '@/app/(portfolio)/projects/chart/chartjs'
+import PopulationGrowthGraph from '@/app/(portfolio)/projects/chart/chartperyear'
+import Chartlegend from '@/app/(portfolio)/projects/chart/chartlegend'
 import Loading from '@/app/(portfolio)/git/loading'
 
 export default async function Index() {
