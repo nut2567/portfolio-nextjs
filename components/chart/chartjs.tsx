@@ -77,6 +77,20 @@ const ChartComponent = () => {
     const options: any = {
         responsive: true,
         indexAxis: 'y' as const,
+        plugins: {
+            datalabels: {
+                display: true,
+                color: '#FFF',
+                font: {
+                    weight: 'bold',
+                    size: 20
+                },
+                anchor: 'end',
+                align: 'center',
+                offset: -50,
+                formatter: (value: number) => value.toLocaleString(), // ฟอร์แมตตัวเลข                
+            },
+        },
         animation: {
             onComplete: () => {
                 // code สำหรับสิ่งที่คุณต้องการทำเมื่อ animation เสร็จสิ้น
@@ -94,6 +108,14 @@ const ChartComponent = () => {
                 title: {
                     display: true,
                     text: 'Population',
+                },
+                grid: {
+                    display: true,
+                    color: 'rgba(100, 100, 100, 0.5)', // สีของเส้นแนวตั้ง (เส้นไม้บรรทัด)
+                    lineWidth: 1,
+                },
+                ticks: {
+                    callback: (value: number) => value.toLocaleString(), // แสดงจำนวนในรูปแบบคั่นด้วยลูกน้ำ
                 },
             },
             y: {
@@ -119,9 +141,9 @@ const ChartComponent = () => {
             <div style={{ position: 'relative' }} className='mb-20'>
                 <h2>Top 12 Countries by Population</h2>
                 <Bar data={chartData} options={options} />
-                <div style={{ position: 'absolute', bottom: 150, right: 0, fontSize: '16px', fontWeight: 'bold', padding: '10px' }}>
-                    <h1>World Population: {groupedData["World"]?.toLocaleString() || 'N/A'}</h1>
-                    <h1>1950-2021</h1>
+                <div style={{ position: 'absolute', bottom: 250, right: 0, fontWeight: 'bold', padding: '10px' }}>
+                    <h1 style={{ fontSize: '24px' }}>World Population: {groupedData["World"]?.toLocaleString() || 'N/A'}</h1>
+                    <h1 style={{ fontSize: '44px' }}>{years[0]} - {years[years.length - 1]}</h1>
                 </div>
             </div>
         </div>

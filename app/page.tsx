@@ -17,8 +17,8 @@ export default async function Index() {
         {/* {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />} */}
 
         <ChartComponent />
-        {/* <PopulationGrowthGraph /> */}
-        <Chartlegend />
+        <PopulationGrowthGraph />
+        {/* <Chartlegend /> */}
       </main>
     </>
   )

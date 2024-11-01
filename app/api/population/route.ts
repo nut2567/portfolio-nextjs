@@ -23,7 +23,7 @@ export async function GET(request: Request) {
         Population: row.Population / steb,
       }))
       .sort((a, b) => b.Population - a.Population) // เรียงลำดับประชากรจากมากไปน้อย
-      .slice(0, 13); // เลือกเฉพาะ 12 อันดับแรก
+    // .slice(0, 13); // เลือกเฉพาะ 12 อันดับแรก
 
     return NextResponse.json(formattedData);
   } catch (error) {
