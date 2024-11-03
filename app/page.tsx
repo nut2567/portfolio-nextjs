@@ -6,13 +6,14 @@ import ChartComponent from '@/app/(portfolio)/projects/chart/chartjs'
 import PopulationGrowthGraph from '@/app/(portfolio)/projects/chart/chartperyear'
 import Chartlegend from '@/app/(portfolio)/projects/chart/chartlegend'
 import Loading from '@/app/(portfolio)/git/loading'
-import Time from '@/components/time'
+import DigitalClockPage from '@/components/digital-clock'
+
 export default async function Index() {
   return (
     <>
       {/* <Hero /> */}
       {/* <Loading /> */}
-      <Time />
+      <DigitalClockPage />
       <main className="flex-1 flex flex-col gap-6 px-4">
         {/* <h2 className="font-medium text-xl mb-4">Next steps</h2> */}
         {/* {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />} */}
