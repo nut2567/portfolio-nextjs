@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useState, useEffect, useMemo } from 'react'
-import { Card } from './ui/card'
+import { Card } from './card'
 import { Button } from './ui/button'
 
 function CurrentTime() {
