@@ -61,11 +61,22 @@ export default function About() {
             className="border rounded-lg shadow p-4 relative bg-[#0000003d] shadow-[]"
             style={{ boxShadow: '#0097ff40 0px -10px 60px inset' }}
           >
-            <div className="collapse collapse-plus bg-base-200">
+            <div className="collapse collapse-plus bg-base-200 mb-4">
+              <input type="radio" name="my-accordion-3" defaultChecked />
+              <div className="collapse-title text-xl font-medium">
+                <h1 className="text-xl font-bold text-blue-200 mb-5">
+                  1.เงินเดือนที่คาดหวัง
+                </h1>
+              </div>
+              <div className="collapse-content">
+                <p>45000 (01/11/67)</p>
+              </div>
+            </div>
+            <div className="collapse collapse-plus bg-base-200 mb-4">
               <input type="radio" name="my-accordion-3" />
               <div className="collapse-title text-xl font-medium">
                 <h1 className="text-xl font-bold text-blue-200 mb-5">
-                  ลองช่วยอธิบายวิธีการแก้ไขและตรวจสอบหาข้อผิดพลาดของโปรแกรม
+                  2.ลองช่วยอธิบายวิธีการแก้ไขและตรวจสอบหาข้อผิดพลาดของโปรแกรม
                   (Bugs) ของคุณให้หน่อย?
                 </h1>
               </div>
@@ -83,11 +94,11 @@ dependencies หรือ environment ที่ไม่ตรงกัน เ�
 การทำงานร่วมกับทีมและขอคำแนะนำจาก lead ก็จะช่วยได้จากหลายมุมมอง หากปัญหาซับซ้อนหรือหาสาเหตุไม่เจอ แล้วงานเร่ง ก็จะเป็นวิธีแก้ ช่วยให้งานเสร็จได้`}</p>
               </div>
             </div>
-            <div className="collapse collapse-plus bg-base-200">
+            <div className="collapse collapse-plus bg-base-200 mb-4">
               <input type="radio" name="my-accordion-3" />
               <div className="collapse-title text-xl font-medium">
                 <h1 className="text-xl font-bold text-blue-200 mb-5">
-                  ลองช่วยอธิบายปัญหาทางเทคนิคที่ซับซ้อนที่สุดที่คุณเคยเจอให้หน่อย
+                  3.ลองช่วยอธิบายปัญหาทางเทคนิคที่ซับซ้อนที่สุดที่คุณเคยเจอให้หน่อย
                   แล้วคุณแก้มันได้ยังไง?
                 </h1>
               </div>
@@ -99,11 +110,11 @@ dependencies หรือ environment ที่ไม่ตรงกัน เ�
  หรือแนวทางใหม่ ๆ ในการแก้ปัญหาได้ด้วย คราวๆก็จะประชุมกันทุกเช้าในช่วงที่ติดปัญหา`}</p>
               </div>
             </div>
-            <div className="collapse collapse-plus bg-base-200">
+            <div className="collapse collapse-plus bg-base-200 mb-4">
               <input type="radio" name="my-accordion-3" />
               <div className="collapse-title text-xl font-medium">
                 <h1 className="text-xl font-bold text-blue-200 mb-5">
-                  วิธีการที่คุณใช้เพื่ออัพเดทเทรนด์และเทคโนโลยีใหม่ๆ
+                  4.วิธีการที่คุณใช้เพื่ออัพเดทเทรนด์และเทคโนโลยีใหม่ๆ
                   ในวงการคืออะไร? ลองอธิบาย
                 </h1>
               </div>
@@ -118,36 +129,27 @@ https://portfolio-nutthawat-nextjs.vercel.app/
 https://point-system-nuxt.vercel.app/home user admin:1234
 การใช้หลายวิธีนี้ช่วยให้ผมสามารถติดตามเทรนด์และเข้าใจการเปลี่ยนแปลงในวงการได้ดีขึ้น และยังช่วยให้พร้อมปรับตัวหรือนำเทคโนโลยีใหม่ ๆ มาปรับใช้ในโปรเจกต์ได้อย่างรวดเร็ว แต่ทุกวันนี้ก็มีอีกหลายอย่างเลยที่จะจ้องติดตาม`}</p>
               </div>
-              <div className="collapse collapse-plus bg-base-200">
-                <input type="radio" name="my-accordion-3" defaultChecked />
-                <div className="collapse-title text-xl font-medium">
-                  <h1 className="text-xl font-bold text-blue-200 mb-5">
-                    4.เงินเดือนที่คาดหวัง
-                  </h1>
-                </div>
-                <div className="collapse-content">
-                  <p>45000 (01/11/67)</p>
-                </div>
+            </div>
+            <div className="collapse collapse-plus bg-base-200 mb-4">
+              <input type="radio" name="my-accordion-3" />
+              <div className="collapse-title text-xl font-medium">
+                <h1 className="text-xl font-bold text-blue-200 mb-5">
+                  5.ตำแหน่งที่พักเมื่อทำงาน
+                </h1>
               </div>
-              <div className="collapse collapse-plus bg-base-200">
-                <input type="radio" name="my-accordion-3" />
-                <div className="collapse-title text-xl font-medium">
-                  <h1 className="text-xl font-bold text-blue-200 mb-5">
-                    ตำแหน่งที่พักเมื่อทำงาน
-                  </h1>
-                </div>
-                <div className="collapse-content">
-                  <p>{`5. อยู่ที่ แถว ม.รังสิต ปทุม ใกล้ หลักหก`}</p>
-                </div>
+              <div className="collapse-content">
+                <p>{`5. อยู่ที่ แถว ม.รังสิต ปทุม ใกล้ หลักหก`}</p>
               </div>
-              <div className="collapse collapse-plus bg-base-200">
-                <input type="radio" name="my-accordion-3" />
-                <div className="collapse-title text-xl font-medium">
-                  Click to open this one and close others
-                </div>
-                <div className="collapse-content">
-                  <p>hello</p>
-                </div>
+            </div>
+            <div className="collapse collapse-plus bg-base-200 mb-4">
+              <input type="radio" name="my-accordion-3" />
+              <div className="collapse-title text-xl font-medium">
+                <h1 className="text-xl font-bold text-blue-200 mb-5">
+                  6.ตำแหน่งงานที่อยากทำ และหน้าที่งานที่รับผิดชอบ
+                </h1>
+              </div>
+              <div className="collapse-content">
+                <p>Full Strack</p>
               </div>
             </div>
           </div>
