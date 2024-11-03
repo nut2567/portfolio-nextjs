@@ -6,15 +6,16 @@ import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { SmtpMessage } from '../smtp-message'
 
-export default function Signup({
+export default async function Signup({
   searchParams,
 }: {
-  searchParams: Message | any
+  searchParams: Promise<Message>
 }) {
-  if (!searchParams.message) {
+  const resolvedSearchParams = await searchParams
+  if (!resolvedSearchParams.message) {
     return (
       <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
-        <FormMessage message={searchParams} />
+        <FormMessage message={resolvedSearchParams} />
       </div>
     )
   }
@@ -43,7 +44,7 @@ export default function Signup({
           <SubmitButton formAction={signUpAction} pendingText="Signing up...">
             Sign up
           </SubmitButton>
-          <FormMessage message={searchParams} />
+          <FormMessage message={resolvedSearchParams} />
         </div>
       </form>
       <SmtpMessage />
