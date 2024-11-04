@@ -15,7 +15,7 @@ function Countdown() {
     <div className="grid grid-flow-col gap-[70px] text-center auto-cols-max ">
       <div className="relative">
         <div className="absolute top-[-31px] left-[-40px]">
-          <TimerCircle time={''} minutes={hours} />
+          <TimerCircle time={''} minutes={''} hours={hours} />
         </div>
         <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
           <span className="countdown font-mono text-5xl">
@@ -26,7 +26,7 @@ function Countdown() {
       </div>
       <div className="relative">
         <div className="absolute top-[-31px] left-[-40px]">
-          <TimerCircle time={''} minutes={minutes} />
+          <TimerCircle time={''} minutes={minutes} hours={''} />
         </div>
         <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
           <span className="countdown font-mono text-5xl">
@@ -37,7 +37,7 @@ function Countdown() {
       </div>
       <div className="relative">
         <div className="absolute top-[-31px] left-[-40px]">
-          <TimerCircle time={seconds} minutes={''} />
+          <TimerCircle time={seconds} minutes={''} hours={''} />
         </div>
         <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
           <span className="countdown font-mono text-5xl">

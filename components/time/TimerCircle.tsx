@@ -5,12 +5,17 @@ import React, { useEffect, useRef, useState } from 'react'
 interface PageProps {
   time: string // เปลี่ยนตาม props ที่คุณต้องการ
   minutes: string
+  hours: string
 }
-const TimerCircle: React.FC<PageProps> = ({ time, minutes }) => {
+const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [seconds, setSeconds] = useState(Number(minutes ? minutes : time))
-  const [Minutes, setMinutes] = useState(Number(minutes))
-  const [Mutitime, setMutitime] = useState(Number(minutes ? '60' : '1'))
+  const [seconds, setSeconds] = useState(
+    Number(minutes ? minutes : time ? time : hours)
+  )
+  const [Minutes, setMinutes] = useState(Number(minutes || time ? '60' : '24'))
+  const [Mutitime, setMutitime] = useState(
+    Number(minutes ? '60' : hours ? '3600' : '1')
+  )
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -37,24 +42,44 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes }) => {
       ctx.stroke()
 
       // Calculate the end angle based on seconds
-      const endAngle = ((seconds % 60) * (Math.PI * 2)) / 60
+      const endAngle = ((seconds % Minutes) * (Math.PI * 2)) / Minutes
 
       // Draw the progress line
       ctx.beginPath()
       ctx.arc(centerX, centerY, radius, -Math.PI / 2, endAngle - Math.PI / 2)
-      ctx.strokeStyle = `hsl(${(seconds % 60) * 6}, 100%, 50%)` // Change color based on seconds
+      ctx.strokeStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // Change color based on seconds
       ctx.lineWidth = 8
       ctx.stroke()
 
       // Request next frame
       animationFrameId = requestAnimationFrame(draw)
+      // คำนวณตำแหน่งของหัวลูกศรให้หันเข้ามาใกล้ศูนย์กลาง
+      const arrowRadius = radius - 5 // ลดระยะจากศูนย์กลางเล็กน้อยเพื่อให้ลูกศรหันเข้า
+
+      const arrowX = centerX + arrowRadius * Math.cos(endAngle - Math.PI / 2)
+      const arrowY = centerY + arrowRadius * Math.sin(endAngle - Math.PI / 2)
+
+      // วาดหัวลูกศรให้ใหญ่ขึ้น
+      ctx.beginPath()
+      ctx.moveTo(arrowX, arrowY)
+      ctx.lineTo(
+        arrowX - 10 * Math.cos(endAngle - Math.PI / 2 + 0.6), // ปรับขนาดให้ใหญ่ขึ้น
+        arrowY - 10 * Math.sin(endAngle - Math.PI / 2 + 0.6)
+      )
+      ctx.lineTo(
+        arrowX - 10 * Math.cos(endAngle - Math.PI / 2 - 0.6), // ปรับขนาดให้ใหญ่ขึ้น
+        arrowY - 10 * Math.sin(endAngle - Math.PI / 2 - 0.6)
+      )
+      ctx.closePath()
+      ctx.fillStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // เปลี่ยนสีตาม seconds
+      ctx.fill()
     }
 
     draw()
 
     // Update seconds every second
     const timerId = setInterval(() => {
-      setSeconds((prev) => (prev + 1) % 60)
+      setSeconds((prev) => (prev + 1) % Minutes)
     }, 1000 * Mutitime)
 
     return () => {
