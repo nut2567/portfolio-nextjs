@@ -6,8 +6,7 @@ import ChartComponent from '@/app/(portfolio)/projects/chart/chartjs'
 import PopulationGrowthGraph from '@/app/(portfolio)/projects/chart/chartperyear'
 import Chartlegend from '@/app/(portfolio)/projects/chart/chartlegend'
 import Loading from '@/app/(portfolio)/git/loading'
-import DigitalClockPage from '@/components/digital-clock'
-
+import DigitalClockPage from '@/components/time/digital-clock'
 export default async function Index() {
   return (
     <>
