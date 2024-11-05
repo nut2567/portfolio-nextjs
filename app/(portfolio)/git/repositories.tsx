@@ -12,12 +12,12 @@ export default function Repositories({
 
   return (
     <div
-      className="border rounded-lg shadow p-4 relative bg-[#0000003d] flex"
+      className="border rounded-lg shadow p-4 relative bg-[#0000003d] flex  flex-col items-start"
       style={{
         boxShadow: '#233549 0px 5px 60px inset ',
       }}
     >
-      <div className=" flex max-w-full overflow-auto  flex-col ">
+      <div className=" flex max-w-full overflow-auto ">
         <ul>
           <li>Sun</li>
           <li>Mon</li>

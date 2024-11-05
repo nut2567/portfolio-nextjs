@@ -12,7 +12,7 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
   const [seconds, setSeconds] = useState(
     Number(minutes ? minutes : time ? time : hours)
   )
-  const [Minutes, setMinutes] = useState(Number(minutes || time ? '60' : '24'))
+  const [Minutes, setMinutes] = useState(Number(minutes || time ? '60' : '12'))
 
   useEffect(() => {
     const canvas = canvasRef.current

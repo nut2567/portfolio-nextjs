@@ -55,7 +55,7 @@ export default function SideNavigation({}) {
             <Link href="/">
               <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center">
                 <div className="flex">
-                  <i className="material-icons items-center flex ">file_copy</i>
+                  <i className="material-icons ">file_copy</i>
                 </div>
               </div>
             </Link>
@@ -65,9 +65,7 @@ export default function SideNavigation({}) {
             <Link href="/git">
               <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center">
                 <div className="flex">
-                  <i className="material-icons items-center flex ">
-                    account_tree
-                  </i>
+                  <i className="material-icons ">account_tree</i>
                 </div>
               </div>
             </Link>
@@ -77,7 +75,7 @@ export default function SideNavigation({}) {
             <Link href="/projects">
               <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center">
                 <div className="flex">
-                  <i className="material-icons items-center flex ">code_off</i>
+                  <i className="material-icons ">code_off</i>
                 </div>
               </div>
             </Link>
@@ -86,9 +84,7 @@ export default function SideNavigation({}) {
             <Link href="/about">
               <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center">
                 <div className="flex">
-                  <i className="material-icons items-center flex ">
-                    perm_contact_calendar
-                  </i>
+                  <i className="material-icons ">perm_contact_calendar</i>
                 </div>
               </div>
             </Link>
@@ -98,7 +94,7 @@ export default function SideNavigation({}) {
             <Link href="/contact">
               <div className="flex items-center p-2 hover:bg-gray-700 rounded justify-center">
                 <div className="flex">
-                  <i className="material-icons items-center flex ">dashboard</i>
+                  <i className="material-icons ">dashboard</i>
                 </div>
               </div>
             </Link>
