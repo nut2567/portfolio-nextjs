@@ -1,9 +1,8 @@
-'use client'
-import { useState, useEffect, useMemo } from 'react'
 import { useRealTime } from './useRealTime'
 import dynamic from 'next/dynamic'
+import TimerCircle from './TimerCircle'
 
-const TimerCircle = dynamic(() => import('./TimerCircle'), { ssr: false })
+// const TimerCircle = dynamic(() => import('./TimerCircle'), { ssr: false })
 function Countdown() {
   const { hours, minutes, seconds } = useRealTime(true) // หรือ false ถ้าต้องการ 12 ชั่วโมง
 

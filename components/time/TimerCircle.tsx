@@ -17,6 +17,11 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
     Number(minutes ? '60' : hours ? '3600' : '1')
   )
 
+  // อัปเดตค่า seconds ทุกครั้งที่ props time, minutes หรือ hours เปลี่ยนแปลง
+  useEffect(() => {
+    setSeconds(Number(minutes ? minutes : time ? time : hours))
+  }, [time, minutes, hours])
+
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return // ตรวจสอบว่า canvas ไม่เป็น null
@@ -50,40 +55,44 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
       ctx.strokeStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // Change color based on seconds
       ctx.lineWidth = 8
       ctx.stroke()
+      // คำนวณตำแหน่งปลายหัวลูกศรให้ตรงกับปลายเส้นโค้ง
+      const arrowX = centerX + radius * Math.cos(endAngle - Math.PI / 2)
+      const arrowY = centerY + radius * Math.sin(endAngle - Math.PI / 2)
+
+      // บันทึกสถานะก่อนทำการหมุน
+      ctx.save()
+
+      // ย้ายไปยังตำแหน่งปลายเส้น
+      ctx.translate(arrowX, arrowY)
+
+      // หมุน canvas เพื่อให้หัวลูกศรหันตามมุมของเส้นวงกลม
+      ctx.rotate(endAngle - Math.PI / 2)
+
+      // วาดหัวลูกศร
+      ctx.beginPath()
+      ctx.moveTo(0, 0)
+      ctx.lineTo(-12, 6) // ขนาดของหัวลูกศร
+      ctx.lineTo(-12, -6)
+      ctx.closePath()
+      ctx.fillStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // เปลี่ยนสีตามเวลา
+      ctx.fill()
+
+      // กู้สถานะที่บันทึกไว้
+      ctx.restore()
 
       // Request next frame
       animationFrameId = requestAnimationFrame(draw)
-      // คำนวณตำแหน่งของหัวลูกศรให้หันเข้ามาใกล้ศูนย์กลาง
-      const arrowRadius = radius - 5 // ลดระยะจากศูนย์กลางเล็กน้อยเพื่อให้ลูกศรหันเข้า
-
-      const arrowX = centerX + arrowRadius * Math.cos(endAngle - Math.PI / 2)
-      const arrowY = centerY + arrowRadius * Math.sin(endAngle - Math.PI / 2)
-
-      // วาดหัวลูกศรให้ใหญ่ขึ้น
-      ctx.beginPath()
-      ctx.moveTo(arrowX, arrowY)
-      ctx.lineTo(
-        arrowX - 10 * Math.cos(endAngle - Math.PI / 2 + 0.6), // ปรับขนาดให้ใหญ่ขึ้น
-        arrowY - 10 * Math.sin(endAngle - Math.PI / 2 + 0.6)
-      )
-      ctx.lineTo(
-        arrowX - 10 * Math.cos(endAngle - Math.PI / 2 - 0.6), // ปรับขนาดให้ใหญ่ขึ้น
-        arrowY - 10 * Math.sin(endAngle - Math.PI / 2 - 0.6)
-      )
-      ctx.closePath()
-      ctx.fillStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // เปลี่ยนสีตาม seconds
-      ctx.fill()
     }
 
     draw()
 
     // Update seconds every second
-    const timerId = setInterval(() => {
-      setSeconds((prev) => (prev + 1) % Minutes)
-    }, 1000 * Mutitime)
+    // const timerId = setInterval(() => {
+    //   setSeconds((prev) => (prev + 1) % Minutes)
+    // }, 1000 * Mutitime)
 
     return () => {
-      clearInterval(timerId)
+      // clearInterval(timerId)
       cancelAnimationFrame(animationFrameId)
     }
   }, [seconds])
