@@ -13,14 +13,6 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
     Number(minutes ? minutes : time ? time : hours)
   )
   const [Minutes, setMinutes] = useState(Number(minutes || time ? '60' : '24'))
-  const [Mutitime, setMutitime] = useState(
-    Number(minutes ? '60' : hours ? '3600' : '1')
-  )
-
-  // อัปเดตค่า seconds ทุกครั้งที่ props time, minutes หรือ hours เปลี่ยนแปลง
-  useEffect(() => {
-    setSeconds(Number(minutes ? minutes : time ? time : hours))
-  }, [time, minutes, hours])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -42,7 +34,7 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
       // Draw the circle
       ctx.beginPath()
       ctx.arc(centerX, centerY, radius, 0, Math.PI * 2)
-      ctx.strokeStyle = '#ccc' // Circle color
+      ctx.strokeStyle = '#000000' // Circle color
       ctx.lineWidth = 8
       ctx.stroke()
 
@@ -86,16 +78,14 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
 
     draw()
 
-    // Update seconds every second
-    // const timerId = setInterval(() => {
-    //   setSeconds((prev) => (prev + 1) % Minutes)
-    // }, 1000 * Mutitime)
+    // อัปเดตค่า seconds ทุกครั้งที่ props time, minutes หรือ hours เปลี่ยนแปลง
+    setSeconds(Number(minutes ? minutes : time ? time : hours))
 
     return () => {
       // clearInterval(timerId)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [seconds])
+  }, [time, minutes, hours])
 
   return <canvas ref={canvasRef} width={150} height={150} />
 }
