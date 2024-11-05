@@ -43,11 +43,11 @@ const DigitalClockPage = () => {
       style={{ boxShadow: 'rgba(0, 0, 0, 0.5) 0px -10px 60px inset' }}
     >
       <Card
-        className="p-8 shadow-2xl rounded-3xl bg-white bg-opacity-80 backdrop-blur-md"
-        style={{ boxShadow: '#6366f1 0px -10px 60px inset' }}
+        className="p-8 shadow-2xl rounded-3xl bg-[#303640] bg-opacity-80 backdrop-blur-md"
+        style={{ boxShadow: '#6366a1 0px -5px 40px inset' }}
       >
         <div className="flex flex-col items-center justify-center">
-          <div className="text-4xl font-extrabold text-gray-900 animate-pulse">
+          <div className="text-4xl font-extrabold text-gray-500 animate-pulse">
             <CurrentTime />
           </div>
           <div className="my-5 ">

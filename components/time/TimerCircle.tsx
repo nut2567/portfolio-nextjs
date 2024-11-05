@@ -47,6 +47,10 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
       ctx.strokeStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // Change color based on seconds
       ctx.lineWidth = 8
       ctx.stroke()
+
+      // Request next frame
+      animationFrameId = requestAnimationFrame(draw)
+
       // คำนวณตำแหน่งปลายหัวลูกศรให้ตรงกับปลายเส้นโค้ง
       const arrowX = centerX + radius * Math.cos(endAngle - Math.PI / 2)
       const arrowY = centerY + radius * Math.sin(endAngle - Math.PI / 2)
@@ -57,23 +61,25 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
       // ย้ายไปยังตำแหน่งปลายเส้น
       ctx.translate(arrowX, arrowY)
 
-      // หมุน canvas เพื่อให้หัวลูกศรหันตามมุมของเส้นวงกลม
-      ctx.rotate(endAngle - Math.PI / 2)
+      // วาดเงาชั้นแรก
+      ctx.shadowColor = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // ใช้สีตามเส้น
+      ctx.shadowBlur = 20 // ขนาดเงาชั้นแรก
 
-      // วาดหัวลูกศร
+      // วาดหัวลูกศรเป็นวงกลม (เงาชั้นแรก)
       ctx.beginPath()
-      ctx.moveTo(0, 0)
-      ctx.lineTo(-12, 6) // ขนาดของหัวลูกศร
-      ctx.lineTo(-12, -6)
-      ctx.closePath()
-      ctx.fillStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)` // เปลี่ยนสีตามเวลา
+      ctx.arc(0, 0, 12, 0, Math.PI * 2)
+      ctx.fillStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)`
+      ctx.fill()
+
+      // วาดเงาชั้นที่สอง
+      ctx.shadowBlur = 60 // ขนาดเงาชั้นที่สอง
+      ctx.beginPath()
+      ctx.arc(0, 0, 12, 0, Math.PI * 2)
+      ctx.fillStyle = `hsl(${(seconds % Minutes) * 6}, 100%, 50%)`
       ctx.fill()
 
       // กู้สถานะที่บันทึกไว้
       ctx.restore()
-
-      // Request next frame
-      animationFrameId = requestAnimationFrame(draw)
     }
 
     draw()
@@ -87,7 +93,7 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
     }
   }, [time, minutes, hours])
 
-  return <canvas ref={canvasRef} width={150} height={150} />
+  return <canvas ref={canvasRef} width={200} height={200} />
 }
 
 export default TimerCircle
