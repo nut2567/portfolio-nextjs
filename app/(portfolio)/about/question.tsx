@@ -1,13 +1,13 @@
 // components/Repositories.tsx (Client Component)
-'use client' // ตรงนี้เป็น Client Component
-import React from 'react'
+"use client"; // ตรงนี้เป็น Client Component
+import React from "react";
 
 export default function Question({ repositories }: { repositories: any[] }) {
-  console.log(repositories)
+  console.log(repositories);
   return (
     <div
-      className="border rounded-lg shadow p-4 relative bg-[#0000003d] shadow-[]"
-      style={{ boxShadow: '#0097ff40 0px -10px 60px inset' }}
+      className="border rounded-lg shadow p-4 relative bg-[#0000003d] "
+      style={{ boxShadow: "#0097ff40 0px -10px 60px inset" }}
     >
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" defaultChecked />
@@ -131,5 +131,5 @@ export default function Question({ repositories }: { repositories: any[] }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
