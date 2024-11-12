@@ -13,75 +13,85 @@ export default function Question({ repositories }: { repositories: any[] }) {
         <input type="radio" name="my-accordion-3" defaultChecked />
         <div className="collapse-title text-xl font-medium">
           <h1 className="text-xl font-bold text-blue-200 mb-5">
-            1.เงินเดือนที่คาดหวัง
+            เงินเดือนที่คาดหวัง
           </h1>
         </div>
         <div className="collapse-content">
           <p>45000 (01/11/67)</p>
         </div>
       </div>
+
+      <div className="collapse collapse-plus bg-base-200 mb-4">
+        <input type="radio" name="my-accordion-3" />
+        <div className="collapse-title text-xl font-medium">
+          <h1 className="text-xl font-bold text-blue-200 mb-5">
+            สถานที่พักเมื่อทำงาน
+          </h1>
+        </div>
+        <div className="collapse-content">
+          <p>{`อยู่ที่ แถว ม.รังสิต ปทุม ใกล้ หลักหก`}</p>
+          <a
+            className="mr-2"
+            href={`https://www.google.com/maps/d/u/0/edit?mid=1aMmI6qNemVuHLcwy15_XLWBuwHAqejE&usp=sharing`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="btn btn-primary">www.google.com/maps</button>
+          </a>
+        </div>
+      </div>
+      <div className="collapse collapse-plus bg-base-200 mb-4">
+        <input type="radio" name="my-accordion-3" />
+        <div className="collapse-title text-xl font-medium">
+          <h1 className="text-xl font-bold text-blue-200 mb-5">
+            ตำแหน่งงานที่อยากทำ และหน้าที่งานที่รับผิดชอบ
+          </h1>
+        </div>
+        <div className="collapse-content">
+          <p>1.FrontEnd Developer</p>
+          <p>2.Software Engineer</p>
+          <p>3.Full Strack</p>
+          <p>JavaScript/NextJs/NuxtJs/Angular</p>
+          <p>NodeJs Express.js</p>
+          <p>PostgreSQL Mongoose</p>
+        </div>
+      </div>
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" className="peer" />
         <div className="collapse-title text-xl font-medium">
           <h1 className="text-xl font-bold text-blue-200 mb-5">
-            2. วิธีการแก้ไขและตรวจสอบหาข้อผิดพลาดของโปรแกรม (Bugs)
+            วิธีการแก้ไขและตรวจสอบหาข้อผิดพลาดของโปรแกรม (Bugs)
           </h1>
         </div>
         <div className="collapse-content">
           <ul className="list-disc list-inside">
             <li>
-              <strong>2.1 ทำความเข้าใจข้อผิดพลาด:</strong>
+              <strong>1 ทำความเข้าใจข้อผิดพลาด:</strong>
               อ่านข้อความ error log
               และวิเคราะห์อาการผิดปกติของโปรแกรมเพื่อหาสาเหตุ
             </li>
             <li>
-              <strong>2.2 สร้าง Test Case:</strong>
+              <strong>2 สร้าง Test Case:</strong>
               ทดสอบด้วย input ต่าง ๆ เพื่อทำให้ข้อผิดพลาดเกิดซ้ำ
               และดูว่าข้อผิดพลาดเกิดขึ้นเมื่อใด
             </li>
             <li>
-              <strong>2.3 ใช้เครื่องมือ Debugger:</strong>
+              <strong>3 ใช้เครื่องมือ Debugger:</strong>
               ตรวจสอบค่าตัวแปรและตั้ง breakpoints
               เพื่อตรวจสอบการทำงานของโปรแกรมในแต่ละขั้นตอน
             </li>
             <li>
-              <strong>2.4 ทำงานร่วมกับทีม:</strong>
+              <strong>4 ทำงานร่วมกับทีม:</strong>
               ขอคำแนะนำจากทีมและใช้ Git เพื่อเปรียบเทียบการเปลี่ยนแปลงของโค้ด
             </li>
           </ul>
         </div>
       </div>
-
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" className="peer" />
         <div className="collapse-title text-xl font-medium">
           <h1 className="text-xl font-bold text-blue-200 mb-5">
-            3. ปัญหาทางเทคนิคที่ซับซ้อนที่สุดที่เคยเจอและวิธีแก้
-          </h1>
-        </div>
-        <div className="collapse-content peer-checked:block">
-          <p className="mb-2">
-            ส่วนใหญ่จะเกิดขึ้นกับเวลาใช้ Third-party Libraries เข้ามาทำงานในระบบ
-            แล้วรายละเอียดของ API หรือ โค้ด ส่วนต่างมีน้อยหรือไม่ชัดเจน
-            แล้วจะต้องประสานงานคุยกันหลายส่วน เช่น อาจจะเป็นซอฟแวร์
-            ของหลายๆเจ้ามารวมกัน
-            ในระบเดียวกันแล้วต้องเขียนให้มันทำงานรวมกันได้ของระบบที่
-            ของแต่ละเจ้ามีอยู่แล้ว
-            การจะทำใหม่หรือแก้จากของเดิมอาจจะเป็นเรื่องที่อยากและใช้เวลา
-            ก็เป็นปัญหาอย่าง มีแนวทางที่จะแก้คือต้องประชุมบ่อยๆ โดยใช้ระบบ Agile
-            ในการแบ่งงาน Sprint ออกมาย่อยมากๆ
-            เพื่อให้มีการรายงานและติดตามได้ง่าย
-            รวมทั้งเปิดโอกาสให้สมาชิกในทีมแต่ละคนช่วยให้คำแนะนำ หรือแนวทางใหม่ ๆ
-            ในการแก้ปัญหาได้ด้วย คราวๆก็จะประชุมกันทุกเช้าในช่วงที่ติดปัญหา
-          </p>
-        </div>
-      </div>
-
-      <div className="collapse collapse-plus bg-base-200 mb-4">
-        <input type="radio" name="my-accordion-3" className="peer" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
-            3. ปัญหาทางเทคนิคที่ซับซ้อนที่สุดที่คุณเคยเจอ แล้วคุณแก้มันได้ยังไง?
+            ปัญหาทางเทคนิคที่ซับซ้อนที่สุดที่คุณเคยเจอ แล้วคุณแก้มันได้ยังไง?
           </h1>
         </div>
         <div className="collapse-content">
@@ -119,18 +129,18 @@ export default function Question({ repositories }: { repositories: any[] }) {
         <input type="radio" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">
           <h1 className="text-xl font-bold text-blue-200 mb-5">
-            4.วิธีการที่คุณใช้เพื่ออัพเดทเทรนด์และเทคโนโลยีใหม่ๆ ในวงการคืออะไร?
+            วิธีการที่คุณใช้เพื่ออัพเดทเทรนด์และเทคโนโลยีใหม่ๆ ในวงการคืออะไร?
             ลองอธิบาย
           </h1>
         </div>
         <div className="collapse-content">
           <p>
-            4 ในการอัปเดตเทรนด์และเทคโนโลยีใหม่ ๆ ในวงการ
+            ในการอัปเดตเทรนด์และเทคโนโลยีใหม่ ๆ ในวงการ
             ผมมักใช้วิธีการหลายทางเพื่อให้แน่ใจว่าครอบคลุมทั้งด้านทฤษฎีและการใช้งานจริง
             วิธีหลัก ๆ ที่ผมใช้ ก็จะมี
           </p>
           <p>
-            4.1 ติดตามข่าวสารจากเว็บไซต์และบล็อกเทคโนโลยีใหม่ ๆ
+            1 ติดตามข่าวสารจากเว็บไซต์และบล็อกเทคโนโลยีใหม่ ๆ
             ที่กำลังเป็นที่นิยมรวมถึงตัวอย่างการใช้งานจริงที่นักพัฒนาคนอื่นนำมาพูดถึงใน
             YouTube คอนเฟอเรนซ์ต่าง ๆ เช่น Google, Apple, Microsoft
             เป็นแหล่งข้อมูลที่ดีในการอัปเดตเทคโนโลยีล่าสุด
@@ -138,9 +148,9 @@ export default function Question({ repositories }: { repositories: any[] }) {
             ๆ และตัวอย่างการใช้งานที่เเห็นภาพได้ง่าย
           </p>
           <p>
-            4.2 ผมมักจะเรียนรู้เทคโนโลยีใหม่ลองสร้างโปรเจกต์ทดลองขนาดเล็กหรือ
-            POC ดูการสอนผ่านคอร์สออนไลน์ใน YouTube หรือบทความ Stack Overflow,
-            Reddit เพราะช่วยให้เข้าใจโครงสร้างพื้นฐานได้ดี
+            2 ผมมักจะเรียนรู้เทคโนโลยีใหม่ลองสร้างโปรเจกต์ทดลองขนาดเล็กหรือ POC
+            ดูการสอนผ่านคอร์สออนไลน์ใน YouTube หรือบทความ Stack Overflow, Reddit
+            เพราะช่วยให้เข้าใจโครงสร้างพื้นฐานได้ดี
             จากนั้นผมจะลองนำเทคโนโลยีเหล่านี้มาสร้างโปรเจกต์ย่อย ๆ
             เพื่อฝึกใช้งานจริง
             ซึ่งเป็นวิธีการที่ช่วยให้จดจำได้ดีกว่าการเรียนรู้ทฤษฎีอย่างเดียว
@@ -184,43 +194,7 @@ export default function Question({ repositories }: { repositories: any[] }) {
         <input type="radio" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">
           <h1 className="text-xl font-bold text-blue-200 mb-5">
-            5.สถานที่พักเมื่อทำงาน
-          </h1>
-        </div>
-        <div className="collapse-content">
-          <p>{`5. อยู่ที่ แถว ม.รังสิต ปทุม ใกล้ หลักหก`}</p>
-          <a
-            className="mr-2"
-            href={`https://www.google.com/maps/d/u/0/edit?mid=1aMmI6qNemVuHLcwy15_XLWBuwHAqejE&usp=sharing`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="btn btn-primary">www.google.com/maps</button>
-          </a>
-        </div>
-      </div>
-      <div className="collapse collapse-plus bg-base-200 mb-4">
-        <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
-            6.ตำแหน่งงานที่อยากทำ และหน้าที่งานที่รับผิดชอบ
-          </h1>
-        </div>
-        <div className="collapse-content">
-          <p>1.FrontEnd Developer</p>
-          <p>2.Software Engineer</p>
-          <p>3.Full Strack</p>
-          <p>JavaScript/NextJs/NuxtJs/Angular</p>
-          <p>NodeJs Express.js</p>
-          <p>PostgreSQL Mongoose</p>
-        </div>
-      </div>
-      <div className="collapse collapse-plus bg-base-200 mb-4">
-        <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
-            7.หัวข้อต่างๆ ในการพัฒนาเว็บด้วย JavaScript, React, และ Next.js
-            ดังนี้
+            หัวข้อต่างๆ ในการพัฒนาเว็บด้วย JavaScript, React, และ Next.js ดังนี้
           </h1>
         </div>
         <div className="collapse-content">
@@ -280,6 +254,7 @@ export default function Question({ repositories }: { repositories: any[] }) {
             </p>
 
             <p>9. Custom Hook ใน React</p>
+
             <p>
               Hook ที่สร้างขึ้นเองเพื่อนำ logic
               ที่ใช้ซ้ำในหลายคอมโพเนนต์มารวมไว้ด้วยกัน เช่น การดึงข้อมูลจาก API

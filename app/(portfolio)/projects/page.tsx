@@ -26,14 +26,6 @@ const vercelProjects = async () => {
   return projects;
 };
 
-const ProjectList = async () => {
-  const projects = await vercelProjects();
-
-  if (!projects.length) {
-    return <div className="text-center">No projects found.</div>; // แสดงข้อความเมื่อไม่มีโปรเจกต์
-  }
-};
-
 export default async function Git() {
   const projects = await vercelProjects();
 
