@@ -4,6 +4,25 @@ import Loading from "../git/loading";
 import Image from "next/image";
 import Question from "./question";
 
+const DownloadPdfButton: React.FC = () => {
+  const handleDownload = async () => {
+    const response = await fetch("/api/download-pdf");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Resume.pdf";
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  return (
+    <button onClick={handleDownload} className="btn btn-primary mb-4">
+      Download Resume PDF <i className="material-icons ">download</i>
+    </button>
+  );
+};
+
 async function getRepositories() {}
 export default function About() {
   const [repositories, setRepositories] = useState([]);
@@ -20,8 +39,11 @@ export default function About() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center ">
-      <div className=" -mr-12 w-3/4">
+    <div className="grid items-center justify-items-center">
+      <div className="">
+        <DownloadPdfButton />
+      </div>
+      <div className=" w-3/4">
         <Suspense fallback={<Loading />}>
           <div
             className="text-white w-full rounded-lg text-xl mb-4"
@@ -59,8 +81,8 @@ export default function About() {
               </div>
             </ul>
           </div>
-          <Question repositories={[]} />
         </Suspense>
+        <Question repositories={[]} />
       </div>
     </div>
   );

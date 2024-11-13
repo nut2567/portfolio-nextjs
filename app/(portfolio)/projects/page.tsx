@@ -3,7 +3,7 @@ import Loading from "../git/loading";
 import Image from "next/image";
 import Repositories from "./repositories";
 import ProjectCard, { Project } from "./ProjectCard";
-
+import Link from "next/link";
 const vercelProjects = async () => {
   let projects = [];
 
@@ -59,7 +59,35 @@ export default async function Git() {
           </ul>
         </div>
         {/* <Repositories repositories={[]} data={[]} projects={projects} /> */}
-        <ul></ul>
+        <div className="container mx-auto p-4">
+          <div className=" flex">
+            <h1 className="text-xl font-bold text-blue-200 mb-5">
+              Project on this 1 projects
+            </h1>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+              className="border rounded-lg shadow p-4 relative bg-[#0000003d] gap-3 grid"
+              style={{ boxShadow: "rgba(0, 0, 0, 0.5) 0px -10px 60px inset" }}
+            >
+              {/* <div className="rounded-lg absolute bottom-0 left-0 h-[60%] w-full bg-gradient-to-b from-[rgba(0,116,224,0)] to-[#99aaba73]"></div> */}
+              <h2 className="text-xl font-semibold">
+                Dashboard Total population growth
+              </h2>
+              <p className="text-gray-400">Libraries: Chartjs</p>
+              <p className="text-gray-300">Domain: this</p>
+
+              <button title={`chart`} className="mt-4">
+                <Link href="/projects/chart">
+                  <div className="flex items-center p-2 btn btn-primary  rounded justify-center">
+                    <div className="flex">View Project</div>
+                  </div>
+                </Link>
+              </button>
+            </div>
+          </div>
+        </div>
         <div className="container mx-auto p-4">
           <div className=" flex">
             <h1 className="text-xl font-bold text-blue-200 mb-5">

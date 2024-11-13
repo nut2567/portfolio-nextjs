@@ -1,17 +1,16 @@
-'use client'
-import { useEffect, useState } from 'react'
-import { Bar } from 'react-chartjs-2'
-import { Chart as ChartJS, registerables } from 'chart.js/auto'
-import ChartDataLabels from 'chartjs-plugin-datalabels'
-import Loading from '@/app/(portfolio)/git/loading'
-import ErrorComponent from '@/components/ErrorComponent'
+"use client";
+import { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, registerables } from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import ErrorComponent from "@/components/layouts/ErrorComponent";
 
-ChartJS.register(...registerables, ChartDataLabels)
+ChartJS.register(...registerables, ChartDataLabels);
 
 interface PopulationData {
-  Country: string
-  Year: number
-  Population: number
+  Country: string;
+  Year: number;
+  Population: number;
 }
 
 const PopulationGrowthGraph = () => {
@@ -19,103 +18,103 @@ const PopulationGrowthGraph = () => {
     labels: [] as string[],
     datasets: [
       {
-        label: 'Population Growth',
+        label: "Population Growth",
         data: [] as number[],
         backgroundColor: [] as string[],
         borderColor: [] as string[],
         borderWidth: 1,
       },
     ],
-  })
-  const [loading, setLoading] = useState(true)
-  const [worldPopulation, setWorldPopulation] = useState(0)
-  const [error, setError] = useState<string | null>(null)
+  });
+  const [loading, setLoading] = useState(true);
+  const [worldPopulation, setWorldPopulation] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
-  const [strikedKeys, setStrikedKeys] = useState<string[]>([])
-  const [currentYearIndex, setCurrentYearIndex] = useState(0)
-  const years = Array.from({ length: 72 }, (_, i) => 1950 + i) // ปี 1950-2020
-  const [isRunning, setIsRunning] = useState(false)
-  const [legend, setLegend] = useState([] as string[])
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null)
+  const [strikedKeys, setStrikedKeys] = useState<string[]>([]);
+  const [currentYearIndex, setCurrentYearIndex] = useState(0);
+  const years = Array.from({ length: 72 }, (_, i) => 1950 + i); // ปี 1950-2020
+  const [isRunning, setIsRunning] = useState(false);
+  const [legend, setLegend] = useState([] as string[]);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
   const [continentCountries, setContinentCountries] = useState<
     Record<string, string[]>
-  >({})
+  >({});
 
   useEffect(() => {
-    setLoading(false)
-  }, [])
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     const fetchContinents = async () => {
       try {
-        const response = await fetch('https://restcountries.com/v3.1/all')
-        const countries = await response.json()
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        const countries = await response.json();
 
-        const continentData: Record<string, string[]> = {}
+        const continentData: Record<string, string[]> = {};
 
         countries.forEach((country: any) => {
-          const continent = country.region
-          const countryName = country.name.common
+          const continent = country.region;
+          const countryName = country.name.common;
 
           if (continent) {
             if (!continentData[continent]) {
-              continentData[continent] = []
+              continentData[continent] = [];
             }
-            continentData[continent].push(countryName)
+            continentData[continent].push(countryName);
           }
-        })
-        console.log(continentData)
+        });
+        console.log(continentData);
         // ตรวจสอบประเทศที่ถูกตีตรา
         //  const excludedCountries = {
         //     : [],
         //     : [],
         //     : []
         // };
-        continentData['Asia'] = [
-          ...continentData['Asia'],
-          'East Timor',
-          'Macao',
-        ]
-        continentData['Americas'] = [...continentData['Americas'], 'Curacao']
-        continentData['Africa'] = [...continentData['Africa'], 'Saint Helena']
-        setContinentCountries(continentData)
+        continentData["Asia"] = [
+          ...continentData["Asia"],
+          "East Timor",
+          "Macao",
+        ];
+        continentData["Americas"] = [...continentData["Americas"], "Curacao"];
+        continentData["Africa"] = [...continentData["Africa"], "Saint Helena"];
+        setContinentCountries(continentData);
       } catch (err) {
-        console.error('Error fetching continent data:', err)
+        console.error("Error fetching continent data:", err);
       }
-    }
+    };
 
-    fetchContinents()
-  }, [])
+    fetchContinents();
+  }, []);
 
   const fetchPopulationData = async (
     year: number,
     steb: number
   ): Promise<PopulationData[]> => {
     try {
-      const res = await fetch(`/api/population?year=${year}&steb=${steb}`)
-      const jsonData = await res.json()
-      return res.ok ? jsonData : []
+      const res = await fetch(`/api/population?year=${year}&steb=${steb}`);
+      const jsonData = await res.json();
+      return res.ok ? jsonData : [];
     } catch (err) {
-      setError('Failed to fetch data')
-      return []
+      setError("Failed to fetch data");
+      return [];
     }
-  }
+  };
 
   const updateChartData = (data: PopulationData[]) => {
     const groupedData = data.reduce(
       (acc, row) => {
-        if (row.Country !== 'World') {
-          acc[row.Country] = (acc[row.Country] || 0) + row.Population
+        if (row.Country !== "World") {
+          acc[row.Country] = (acc[row.Country] || 0) + row.Population;
         }
-        return acc
+        return acc;
       },
       {} as Record<string, number>
-    )
+    );
 
     setWorldPopulation(
-      data.find((row) => row.Country === 'World')?.Population || 0
-    )
+      data.find((row) => row.Country === "World")?.Population || 0
+    );
 
     const sortedCountries = Object.entries(groupedData)
       .sort(([, a], [, b]) => b - a)
@@ -130,18 +129,18 @@ const PopulationGrowthGraph = () => {
             return (
               continentCountries[key]?.includes(row) ||
               continentCountries[key].includes(row)
-            )
+            );
           }
-          return false // ถ้าไม่ถูกตีตราให้ไม่ฟิลเตอร์
-        })
+          return false; // ถ้าไม่ถูกตีตราให้ไม่ฟิลเตอร์
+        });
       })
-      .slice(0, 12)
+      .slice(0, 12);
 
     setChartData({
       labels: sortedCountries,
       datasets: [
         {
-          label: 'Total Population',
+          label: "Total Population",
           data: sortedCountries.map((country) => groupedData[country]),
           backgroundColor: sortedCountries.map(
             (_, index) => `hsl(${index * 30}, 50%, 50%)`
@@ -150,10 +149,10 @@ const PopulationGrowthGraph = () => {
           borderWidth: 1,
         },
       ],
-    })
-  }
+    });
+  };
   useEffect(() => {
-    const year = years[currentYearIndex]
+    const year = years[currentYearIndex];
     // console.log('year', year, currentYearIndex);
     // setTimeout(() => {
     //     fetchPopulationData(year, 4)
@@ -175,59 +174,59 @@ const PopulationGrowthGraph = () => {
     // }, 750);
     // setTimeout(() => {
     fetchPopulationData(year, 1).then((data) => {
-      updateChartData(data)
-    })
+      updateChartData(data);
+    });
     // }, 1000);
-  }, [currentYearIndex, strikedKeys])
+  }, [currentYearIndex, strikedKeys]);
 
   const startFetchingData = () => {
     if (!isRunning && currentYearIndex < years.length) {
-      setIsRunning(true)
+      setIsRunning(true);
       const id = setInterval(async () => {
         setCurrentYearIndex((prevIndex) => {
           if (prevIndex + 1 < years.length) {
-            return prevIndex + 1
+            return prevIndex + 1;
           } else {
             // clearInterval(id);
             // setIsRunning(false);
-            return 0
+            return 0;
           }
-        })
-      }, 200)
-      setIntervalId(id)
+        });
+      }, 200);
+      setIntervalId(id);
     }
-  }
+  };
 
   const stopFetchingData = () => {
     if (intervalId) {
-      clearInterval(intervalId)
-      setIsRunning(false)
+      clearInterval(intervalId);
+      setIsRunning(false);
     }
-  }
+  };
 
   // ฟังก์ชันการจัดการเมื่อเลื่อนเส้นเวลา
   const handleTimelineChange = (event: any) => {
-    const index = years.indexOf(parseInt(event.target.value))
-    console.log(index) // ผลลัพธ์จะเป็น 50
-    setCurrentYearIndex(index)
-  }
+    const index = years.indexOf(parseInt(event.target.value));
+    console.log(index); // ผลลัพธ์จะเป็น 50
+    setCurrentYearIndex(index);
+  };
 
   const options: any = {
     responsive: true,
-    indexAxis: 'y' as const,
+    indexAxis: "y" as const,
     plugins: {
       legend: {
         display: false,
       },
       datalabels: {
         display: true,
-        color: '#FFF', // สีของตัวเลข
+        color: "#FFF", // สีของตัวเลข
         font: {
-          weight: 'bold',
+          weight: "bold",
           size: 20,
         },
-        anchor: 'end', // ตำแหน่ง anchor ของ label
-        align: 'center', // จัดตำแหน่ง label ให้ด้านบนของแท่ง
+        anchor: "end", // ตำแหน่ง anchor ของ label
+        align: "center", // จัดตำแหน่ง label ให้ด้านบนของแท่ง
         offset: -50, // เพิ่ม offset ให้ขยับเข้าไปใกล้ตรงกลาง (ค่าติดลบขยับไปด้านในแท่ง)
         formatter: (value: number) => value.toLocaleString(), // ฟอร์แมตตัวเลข
       },
@@ -237,23 +236,23 @@ const PopulationGrowthGraph = () => {
         // code สำหรับสิ่งที่คุณต้องการทำเมื่อ animation เสร็จสิ้น
       },
       delay: (context: any) => {
-        let delay = 0
-        if (context.type === 'data' && context.mode === 'default') {
-          delay = context.dataIndex * 300 // ตั้งค่า delay ตาม index ของข้อมูล
+        let delay = 0;
+        if (context.type === "data" && context.mode === "default") {
+          delay = context.dataIndex * 300; // ตั้งค่า delay ตาม index ของข้อมูล
         }
-        return delay
+        return delay;
       },
     },
     scales: {
       x: {
         title: {
           display: true,
-          text: 'Population',
+          text: "Population",
         },
 
         grid: {
           display: true,
-          color: 'rgba(100, 100, 100, 0.5)', // สีของเส้นแนวตั้ง (เส้นไม้บรรทัด)
+          color: "rgba(100, 100, 100, 0.5)", // สีของเส้นแนวตั้ง (เส้นไม้บรรทัด)
           lineWidth: 1,
         },
         ticks: {
@@ -263,11 +262,11 @@ const PopulationGrowthGraph = () => {
       y: {
         title: {
           display: true,
-          text: 'Country',
+          text: "Country",
         },
       },
     },
-  }
+  };
 
   const handleClick = (key: string) => {
     setStrikedKeys(
@@ -275,16 +274,15 @@ const PopulationGrowthGraph = () => {
         prevStrikedKeys.includes(key)
           ? prevStrikedKeys.filter((k) => k !== key) // Remove key if it already exists
           : [...prevStrikedKeys, key] // Add key if it doesn't exist
-    )
-  }
+    );
+  };
 
-  if (loading) return <Loading />
   if (error)
     return (
       <div>
         <ErrorComponent message={error} />
       </div>
-    )
+    );
 
   return (
     <div>
@@ -301,7 +299,7 @@ const PopulationGrowthGraph = () => {
           <div
             key={index}
             className={`flex items-center cursor-pointer p-4 inline-block ${
-              strikedKeys.includes(key) ? 'line-through' : ''
+              strikedKeys.includes(key) ? "line-through" : ""
             }`}
             onClick={() => handleClick(key)}
           >
@@ -317,21 +315,21 @@ const PopulationGrowthGraph = () => {
           </div>
         ))}
       </div>
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: "relative" }}>
         <Bar data={chartData} options={options} />
         <div
           style={{
-            position: 'absolute',
+            position: "absolute",
             bottom: 250,
             right: 0,
-            fontWeight: 'bold',
-            padding: '10px',
+            fontWeight: "bold",
+            padding: "10px",
           }}
         >
-          <h1 style={{ fontSize: '24px' }}>
-            World Population: {worldPopulation.toLocaleString() || 'N/A'}
+          <h1 style={{ fontSize: "24px" }}>
+            World Population: {worldPopulation.toLocaleString() || "N/A"}
           </h1>
-          <h1 style={{ fontSize: '44px' }}>{years[currentYearIndex]}</h1>
+          <h1 style={{ fontSize: "44px" }}>{years[currentYearIndex]}</h1>
         </div>
 
         {/* เส้นไทม์ไลน์ที่แสดงทุก 5 ปี */}
@@ -353,7 +351,7 @@ const PopulationGrowthGraph = () => {
           max={years[years.length - 1]}
           value={years[currentYearIndex]}
           onChange={handleTimelineChange}
-          style={{ width: '100%', marginTop: '20px' }}
+          style={{ width: "100%", marginTop: "20px" }}
         />
 
         <div className="mt-4">
@@ -375,7 +373,7 @@ const PopulationGrowthGraph = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PopulationGrowthGraph
+export default PopulationGrowthGraph;

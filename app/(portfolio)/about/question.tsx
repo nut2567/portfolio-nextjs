@@ -13,6 +13,22 @@ export default function Question({ repositories }: { repositories: any[] }) {
         <input type="radio" name="my-accordion-3" defaultChecked />
         <div className="collapse-title text-xl font-medium">
           <h1 className="text-xl font-bold text-blue-200 mb-5">
+            ตำแหน่งงานที่อยากทำ และหน้าที่งานที่รับผิดชอบ
+          </h1>
+        </div>
+        <div className="collapse-content">
+          <p>1.FrontEnd Developer</p>
+          <p>2.Software Engineer</p>
+          <p>3.Full Strack main front</p>
+          <p>JavaScript/NextJs/NuxtJs/Angular</p>
+          <p>NodeJs Express.js</p>
+          <p>PostgreSQL Mongoose</p>
+        </div>
+      </div>
+      <div className="collapse collapse-plus bg-base-200 mb-4">
+        <input type="radio" name="my-accordion-3" />
+        <div className="collapse-title text-xl font-medium">
+          <h1 className="text-xl font-bold text-blue-200 mb-5">
             เงินเดือนที่คาดหวัง
           </h1>
         </div>
@@ -40,22 +56,7 @@ export default function Question({ repositories }: { repositories: any[] }) {
           </a>
         </div>
       </div>
-      <div className="collapse collapse-plus bg-base-200 mb-4">
-        <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
-            ตำแหน่งงานที่อยากทำ และหน้าที่งานที่รับผิดชอบ
-          </h1>
-        </div>
-        <div className="collapse-content">
-          <p>1.FrontEnd Developer</p>
-          <p>2.Software Engineer</p>
-          <p>3.Full Strack</p>
-          <p>JavaScript/NextJs/NuxtJs/Angular</p>
-          <p>NodeJs Express.js</p>
-          <p>PostgreSQL Mongoose</p>
-        </div>
-      </div>
+
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" className="peer" />
         <div className="collapse-title text-xl font-medium">
