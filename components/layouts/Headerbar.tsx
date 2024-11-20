@@ -1,18 +1,18 @@
-'use client'
-import Image from 'next/image'
-import { ThemeSwitcher } from '@/components/supabase/theme-switcher'
-export default function Layout({ }) {
+"use client";
+import Image from "next/image";
+import { ThemeSwitcher } from "@/components/supabase/theme-switcher";
+export default function Layout({}) {
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-black z-40 sticky top-0">
       <div className="w-full pl-24 flex font-semibold justify-between items-center p-3 text-sm">
         <div className="flex gap-5">
           <p>Portfolio</p>
-          <p>Nutthawat Witdumring</p>
+          <p>Nutthawat Witdumrong</p>
         </div>
 
         <div>
           <div className="flex justify-center items-center w-full">
-            {' '}
+            {" "}
             powered by
             <div className=" mx-5">
               <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
@@ -34,5 +34,5 @@ export default function Layout({ }) {
         </div>
       </div>
     </nav>
-  )
+  );
 }

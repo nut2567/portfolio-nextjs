@@ -1,5 +1,3 @@
-// components/Repositories.tsx (Client Component)
-"use client"; // ตรงนี้เป็น Client Component
 import React from "react";
 
 export default function Question({ repositories }: { repositories: any[] }) {

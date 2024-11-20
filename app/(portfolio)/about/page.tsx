@@ -23,20 +23,8 @@ const DownloadPdfButton: React.FC = () => {
   );
 };
 
-async function getRepositories() {}
 export default function About() {
   const [repositories, setRepositories] = useState([]);
-
-  const initRepositories = async () => {
-    try {
-      const res = await getRepositories();
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    initRepositories();
-  }, []);
 
   return (
     <div className="grid items-center justify-items-center">
