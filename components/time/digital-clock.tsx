@@ -1,10 +1,8 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
 import { Card } from "./card";
-import { Button } from "../ui/button";
 import dynamic from "next/dynamic";
 
-const TimerCircle = dynamic(() => import("./TimerCircle"), { ssr: false });
 const Countdown = dynamic(() => import("./time"), { ssr: false });
 
 function CurrentTime() {
