@@ -3,6 +3,7 @@ import Loading from "../git/loading";
 import Image from "next/image";
 import Repositories from "./repositories";
 import ProjectCard, { Project } from "./ProjectCard";
+import { RAILWAY } from "./RAILWAY";
 import Link from "next/link";
 const vercelProjects = async () => {
   let projects = [];
@@ -19,6 +20,7 @@ const vercelProjects = async () => {
       data
     );
     projects = data.projects || []; // ตรวจสอบว่า data.projects มีอยู่ไหม
+    await RAILWAY();
   } catch (error) {
     console.error("Error fetching projects:", error);
   }

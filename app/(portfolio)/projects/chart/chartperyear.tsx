@@ -48,7 +48,7 @@ const PopulationGrowthGraph = () => {
   useEffect(() => {
     const fetchContinents = async () => {
       try {
-        const response = await fetch("https://restcountries.com/v3.1/all");
+        const response = await fetch("/api/restcountries");
         const countries = await response.json();
 
         const continentData: Record<string, string[]> = {};
@@ -298,7 +298,7 @@ const PopulationGrowthGraph = () => {
         {Object.keys(continentCountries).map((key, index) => (
           <div
             key={index}
-            className={`flex items-center cursor-pointer p-4 inline-block ${
+            className={`flex items-center cursor-pointer p-4 ${
               strikedKeys.includes(key) ? "line-through" : ""
             }`}
             onClick={() => handleClick(key)}

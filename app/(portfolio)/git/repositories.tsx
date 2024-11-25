@@ -34,7 +34,7 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
           </tr>
         </thead>
         <tbody>
-          {repositoriesWithWatchers.map((repo) => {
+          {repositoriesWithWatchers.map((repo, Index) => {
             const totalCommits = repo.refs.nodes.reduce(
               (sum: number, branch) => {
                 return (
@@ -59,7 +59,9 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
                       className="collapse-title cursor-pointer flex items-center justify-between p-4 bg-base-200"
                     >
                       <div className="flex flex-col">
-                        <span className="font-bold">{repo.name}</span>
+                        <span className="font-bold">
+                          {Index + 1}. - {repo.name}
+                        </span>
                         <span>
                           ⭐ {repo.stargazerCount} | 👁️ {repo.watchers} watchers
                           | 🍴 {repo.forkCount} forks
@@ -69,14 +71,14 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
                       <span className="text-blue-500">Details</span>
                     </label>
 
-                    <div className="collapse-content bg-gray-300 p-4">
-                      <div className="space-y-4">
+                    <div className="collapse-content bg-gray-400 p-4 text-gray-800">
+                      <div className="grid smb:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12 w-full">
                         {repo.refs.nodes.map((branch) => (
                           <div
                             key={branch.name}
                             className="flex flex-col items-start justify-start"
                           >
-                            <p className="font-semibold text-gray-800">
+                            <p className="font-semibold ">
                               Branch: {branch.name}
                             </p>
                             <p>
