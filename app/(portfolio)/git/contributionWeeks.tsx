@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export default function ContributionWeeks({
   repositories,
   contributionWeeks,
@@ -16,7 +20,7 @@ export default function ContributionWeeks({
         boxShadow: "#233549 0px 5px 60px inset ",
       }}
     >
-      <div className=" flex max-w-full overflow-auto ">
+      <div className="flex max-w-full overflow-auto">
         <ul>
           <li>Sun</li>
           <li>Mon</li>
@@ -31,11 +35,17 @@ export default function ContributionWeeks({
             {contributionWeeks.map((week: any, weekIndex: number) => (
               <div key={weekIndex} className="contents">
                 {week.contributionDays.map((day: any, dayIndex: number) => (
-                  <div
+                  <motion.div
                     key={dayIndex}
                     className="w-5 h-5 rounded-sm transition-opacity duration-300"
                     style={{ backgroundColor: day.color }}
                     title={`${day.contributionCount} contributions on ${day.date}`}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: weekIndex * 0.1 + dayIndex * 0.05,
+                      duration: 0.3,
+                    }}
                   />
                 ))}
               </div>

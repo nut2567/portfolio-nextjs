@@ -1,4 +1,8 @@
 "use client";
+
+import { motion, Variants, useInView } from "framer-motion";
+import { useRef } from "react";
+
 type Repository = {
   name: string;
   stargazerCount: number;
@@ -20,8 +24,12 @@ type Repository = {
 type Props = {
   repositoriesWithWatchers: Repository[];
 };
+
 export default function Repositories({ repositoriesWithWatchers }: Props) {
-  console.log(repositoriesWithWatchers);
+  const fadeIn: Variants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 },
+  };
 
   return (
     <>
@@ -34,21 +42,32 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
           </tr>
         </thead>
         <tbody>
-          {repositoriesWithWatchers.map((repo, Index) => {
-            const totalCommits = repo.refs.nodes.reduce(
-              (sum: number, branch) => {
-                return (
-                  sum +
-                  (branch.target.history ? branch.target.history.totalCount : 0)
-                );
-              },
-              0
-            );
+          {repositoriesWithWatchers.map((repo, index) => {
+            const ref = useRef(null);
+            const isInView = useInView(ref, { once: true });
+
+            const totalCommits = repo.refs.nodes.reduce((sum, branch) => {
+              return (
+                sum +
+                (branch.target.history ? branch.target.history.totalCount : 0)
+              );
+            }, 0);
 
             return (
               <tr key={repo.name} className="bg-base-100 hover:bg-gray-600">
                 <td className="border border-gray-300 px-4 py-4">
-                  <div className="collapse collapse-plus w-full border  border-gray-300">
+                  <motion.div
+                    ref={ref}
+                    className="collapse collapse-plus w-full border border-gray-300"
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                    variants={fadeIn}
+                    transition={{
+                      duration: 0.5,
+                      delay: index * 0.2, // เพิ่ม delay ไล่ตาม index
+                      ease: [0, 0.71, 0.2, 1.01],
+                    }}
+                  >
                     <input
                       type="checkbox"
                       id={`collapse-${repo.name}`}
@@ -58,9 +77,9 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
                       htmlFor={`collapse-${repo.name}`}
                       className="collapse-title cursor-pointer flex items-center justify-between p-4 bg-base-200"
                     >
-                      <div className="flex flex-col">
+                      <div className="card">
                         <span className="font-bold">
-                          {Index + 1}. - {repo.name}
+                          {index + 1}. - {repo.name}
                         </span>
                         <span>
                           ⭐ {repo.stargazerCount} | 👁️ {repo.watchers} watchers
@@ -108,7 +127,7 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </td>
               </tr>
             );

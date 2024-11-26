@@ -6,6 +6,8 @@ import ChartComponent from "@/app/(portfolio)/projects/chart/chartjs";
 import PopulationGrowthGraph from "@/app/(portfolio)/projects/chart/chartperyear";
 import Chartlegend from "@/app/(portfolio)/projects/chart/chartlegend";
 import DigitalClockPage from "@/components/time/digital-clock";
+import Git from "@/app/(portfolio)/git/page";
+import Projects from "@/app/(portfolio)/projects/page";
 export default async function Index() {
   return (
     <>
@@ -14,7 +16,11 @@ export default async function Index() {
         <DigitalClockPage />
         {/* <h2 className="font-medium text-xl mb-4">Next steps</h2> */}
         {/* {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />} */}
-        กราฟย้ายไปอยู๋ส่วนของโปรเจค
+
+        <Git />
+        <div className="mt-20 -mx-4">
+          <Projects />
+        </div>
       </main>
     </>
   );
