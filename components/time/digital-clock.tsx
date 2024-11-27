@@ -55,8 +55,9 @@ const DigitalClockPage = () => {
 
   return (
     <div
-      className={`flex justify-center border bg-gradient-to-r from-[#261139] via-indigo-500 to-[#4e1431] py-5 mb-5 -mx-12 shadow relative transition-height duration-1000 ease-in-out 
-        ${isResized ? "h-fit mt-56" : "h-screen -mt-12 pt-[250px]"}`}
+      className={`flex justify-center border bg-gradient-to-r from-[#261139] via-indigo-500 to-[#4e1431] py-5 mb-5 
+        shadow relative transition-height duration-1000 ease-in-out 
+        ${isResized ? "h-fit mt-56 -mx-12" : "h-screen -mx-16 pt-[250px] -mt-12"}`}
       style={{ boxShadow: "rgba(0, 0, 0, 0.5) 0px -10px 60px inset" }}
     >
       <Card
