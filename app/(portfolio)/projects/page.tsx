@@ -6,7 +6,6 @@ import ProjectCard, { Project } from "./ProjectCard";
 import OnProject from "./onProject";
 const vercelProjects = async () => {
   let projects = [];
-
   try {
     const response = await fetch(`https://api.vercel.com/v9/projects`, {
       headers: {
@@ -28,6 +27,18 @@ const vercelProjects = async () => {
 
 export default async function Git() {
   const projects = await vercelProjects();
+  const data = [
+    {
+      name: "Dashboard Total Population Growth",
+      Libraries: "Chartjs",
+      link: "/projects/chart",
+    },
+    {
+      name: "Motions",
+      Libraries: "framer-motion",
+      link: "/projects/motion",
+    },
+  ];
 
   if (!projects.length) {
     return <div className="text-center">No projects found.</div>; // แสดงข้อความเมื่อไม่มีโปรเจกต์
@@ -65,7 +76,7 @@ export default async function Git() {
             </h1>
           </div>
         </div>
-        <OnProject />
+        <OnProject data={data} />
         <div className="container mx-auto p-4">
           <div className=" flex">
             <h1 className="text-xl font-bold text-blue-200 mb-5">
