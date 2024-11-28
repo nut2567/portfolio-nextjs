@@ -4,6 +4,7 @@ import Chartlegend from "@/app/(portfolio)/projects/chart/chartlegend";
 import DigitalClockPage from "@/components/time/digital-clock";
 import Git from "@/app/(portfolio)/git/page";
 import Projects from "@/app/(portfolio)/projects/page";
+import ME from "@/app/(portfolio)/about/page";
 export default async function Index() {
   return (
     <>
@@ -17,6 +18,7 @@ export default async function Index() {
         <div className="py-20 -mx-4">
           <Projects />
         </div>
+        <ME />
       </main>
     </>
   );

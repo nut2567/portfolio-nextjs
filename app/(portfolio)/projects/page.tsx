@@ -4,39 +4,25 @@ import Image from "next/image";
 import Repositories from "./repositories";
 import ProjectCard, { Project } from "./ProjectCard";
 import OnProject from "./onProject";
-const vercelProjects = async () => {
-  let projects = [];
-  try {
-    const response = await fetch(`https://api.vercel.com/v9/projects`, {
-      headers: {
-        Authorization: `Bearer ${process.env.vercel_token}`,
-      },
-    });
-    const data = await response.json();
-    console.log(
-      "vercelProjectsData >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      data
-    );
-    projects = data.projects || []; // ตรวจสอบว่า data.projects มีอยู่ไหม
-  } catch (error) {
-    console.error("Error fetching projects:", error);
-  }
-
-  return projects;
-};
+import vercelProjects from "./vercelProjects";
 
 export default async function Git() {
   const projects = await vercelProjects();
+
   const data = [
     {
       name: "Dashboard Total Population Growth",
       Libraries: "Chartjs",
       link: "/projects/chart",
+      randomdelay: Math.random() * 0.5,
+      randomdirection: Math.random() > 0.5 ? -100 : 100,
     },
     {
       name: "Motions",
       Libraries: "framer-motion",
       link: "/projects/motion",
+      randomdelay: Math.random() * 0.5,
+      randomdirection: Math.random() > 0.5 ? -100 : 100,
     },
   ];
 
@@ -46,7 +32,7 @@ export default async function Git() {
 
   return (
     <div
-      className="-m-12 p-12 h-full"
+      className="-m-12 p-12 h-full min-h-screen"
       style={{
         background:
           "linear-gradient(90deg, #001930 0%, #00488a 35%, #00488a 50%, #00488a 65%, #001930)",
@@ -86,8 +72,10 @@ export default async function Git() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {projects.map((project: Project, index: number) => {
+              project.directionx = Math.random() > 0.5 ? -100 : 100;
+              project.directiony = Math.random() > 0.5 ? -100 : 100;
               project.index = index;
-              return <ProjectCard key={project.id} project={project} />;
+              return <ProjectCard key={project.name} project={project} />;
             })}
           </div>
         </div>

@@ -1,7 +1,7 @@
 // app/(portfolio)/projects/ProjectCard.tsx
 "use client";
 import { motion, Variants, useInView } from "framer-motion";
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 export interface Project {
   id: string;
@@ -21,6 +21,8 @@ export interface Project {
     url: string;
     alias: string[];
   }[];
+  directionx: number;
+  directiony: number;
 }
 
 const ProjectCard = ({ project }: { project: Project }) => {
@@ -33,10 +35,6 @@ const ProjectCard = ({ project }: { project: Project }) => {
     hidden: { opacity: 0, x: -100 }, // เริ่มต้นด้านซ้ายพร้อมความโปร่งใส 0
     visible: { opacity: 1, x: 0 }, // เคลื่อนเข้ามาตรงกลางพร้อมความโปร่งใส 1
   };
-
-  // สุ่มเลื่อนเข้าจากซ้ายหรือขวา
-  const directionx = Math.random() > 0.5 ? 100 : -100;
-  const directiony = Math.random() > 0.5 ? 100 : -100;
 
   // สร้าง delay โดยสัมพันธ์กับ index ของกล่อง
   const delay = project.index * 0.2;
@@ -52,7 +50,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         boxShadow: "rgba(0, 0, 0, 0.5) 0px -10px 60px inset",
         minHeight: "300px", // กำหนดความสูงเท่ากัน
       }}
-      initial={{ opacity: 0, x: directionx, y: directiony }}
+      initial={{ opacity: 0, x: project.directionx, y: project.directiony }}
       transition={{
         duration: Math.random() * 0.5 + 0.8, // สุ่มระยะเวลา,
         delay: delay,

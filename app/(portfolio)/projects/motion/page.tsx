@@ -62,7 +62,7 @@ const WatercolorEffect = () => {
       <motion.div
         className="text-red-600 text-xl font-semibold"
         initial={{ opacity: 0 }}
-        animate={{ opacity: hover ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{
           delay: 0.5,
           duration: 1,
