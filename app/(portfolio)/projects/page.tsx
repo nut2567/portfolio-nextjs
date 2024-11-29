@@ -31,14 +31,8 @@ export default async function Git() {
   }
 
   return (
-    <div
-      className="-m-12 p-12 h-full min-h-screen"
-      style={{
-        background:
-          "linear-gradient(90deg, #001930 0%, #00488a 35%, #00488a 50%, #00488a 65%, #001930)",
-      }}
-    >
-      <Suspense fallback={<Loading />}>
+    <div>
+      <Suspense>
         <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
           <ul className="list-none space-y-2 flex items-center gap-4">
             <div className="mx-5">

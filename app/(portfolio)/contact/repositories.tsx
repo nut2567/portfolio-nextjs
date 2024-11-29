@@ -34,7 +34,7 @@ const FullScreenDiv: React.FC<{ children: React.ReactNode }> = ({
       {!isResized && (
         <nav className="flex justify-center border-b border-b-foreground/10 h-16 bg-black z-40 absolute inset-x-[50%] bottom-0 items-center">
           <div className="w-full flex font-semibold items-center p-3 text-sm">
-            <div className="transition-transform duration-[1200] animate-bounce gap-5 justify-between">
+            <div className="transition-transform duration-1000 animate-bounce gap-5 justify-between">
               <p className="m-[5px]">Scroll</p>
               <i
                 className={` material-icons  items-center flex`}

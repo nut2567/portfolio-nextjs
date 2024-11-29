@@ -5,10 +5,10 @@ import Loading from "./loading";
 
 export default function Page() {
   return (
-    <>
+    <div>
       {/* <Loading /> */}
       <ChartComponent />
       <PopulationGrowthGraph />
-    </>
+    </div>
   );
 }
