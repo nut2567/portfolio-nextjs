@@ -34,7 +34,7 @@ export default function RootLayout({
           <SideNavigation />
           {/* <DeployButton /> */}
           {/* {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />} */}
-          <main className="min-h-screen flex flex-col items-center">
+          <main className="min-h-screen flex flex-col items-center w-full">
             <div className="flex-1 w-full flex flex-col items-center h-full">
               <Headerbar />
               <div className="flex flex-col w-full p-12 pl-24  h-full">

@@ -24,6 +24,13 @@ export default async function Git() {
       randomdelay: Math.random() * 0.5,
       randomdirection: Math.random() > 0.5 ? -100 : 100,
     },
+    {
+      name: "Coding",
+      Libraries: "ChatGPT",
+      link: "/projects/code",
+      randomdelay: Math.random() * 0.5,
+      randomdirection: Math.random() > 0.5 ? -100 : 100,
+    },
   ];
 
   if (!projects.length) {
@@ -58,10 +65,12 @@ export default async function Git() {
         </div>
         <OnProject data={data} />
         <div className="container mx-auto p-4">
-          <div className=" flex">
-            <h1 className="text-xl font-bold text-blue-200 mb-5">
-              Project other Environment on Vercel {projects.length} projects
-            </h1>
+          <div className="container mx-auto p-4">
+            <div className=" flex">
+              <h1 className="text-xl font-bold text-blue-200 mb-5">
+                Project other Environment on Vercel {projects.length} projects
+              </h1>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
