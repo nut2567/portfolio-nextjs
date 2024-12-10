@@ -130,7 +130,7 @@ const JigsawBackground = () => {
   );
 };
 
-export function SnapEffect() {
+function SnapEffect() {
   const [showFirst, setShowFirst] = useState(true);
 
   // Variants สำหรับ Animation
@@ -180,7 +180,7 @@ export function SnapEffect() {
   );
 }
 
-export function WaveTransition() {
+function WaveTransition() {
   const [showFirst, setShowFirst] = useState(true);
 
   // Variants สำหรับ Animation
@@ -238,7 +238,7 @@ export function WaveTransition() {
   );
 }
 
-export function ShrinkingTransition() {
+function ShrinkingTransition() {
   const [isVisible, setIsVisible] = useState(true);
 
   return (
@@ -301,7 +301,7 @@ export function ShrinkingTransition() {
   );
 }
 
-export function TextInBoxWithOverflow() {
+function TextInBoxWithOverflow() {
   const [isShrinking, setIsShrinking] = useState(false);
 
   return (
