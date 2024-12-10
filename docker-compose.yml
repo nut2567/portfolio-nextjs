@@ -1,0 +1,6 @@
+
+services:
+  web:
+    build: .
+    ports:
+      - "4000:4000"  # พอร์ตที่ backend ฟัง

@@ -2,9 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const FullScreenDiv: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const FullScreenDiv = () => {
   const [isResized, setIsResized] = useState(false);
 
   useEffect(() => {
@@ -26,7 +24,6 @@ const FullScreenDiv: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <div className="space-y-32">
-      {children}
       <WatercolorEffect />
       <JigsawBackground />
       <SnapEffect />

@@ -1,5 +1,4 @@
 import { useRealTime } from "./useRealTime";
-import dynamic from "next/dynamic";
 import TimerCircle from "./TimerCircle";
 
 function Countdown() {
