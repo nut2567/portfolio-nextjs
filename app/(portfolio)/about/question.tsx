@@ -31,7 +31,7 @@ export default function Question({ repositories }: { repositories: any[] }) {
           </h1>
         </div>
         <div className="collapse-content">
-          <p>45000 (01/11/67)</p>
+          <p>30000-40000 ต่อรองได้ (01/01/68)</p>
         </div>
       </div>
 
