@@ -19,25 +19,24 @@ export default function Socials() {
   ]
 
   return (
-    <div className="min-h-[1500px] -m-6 -ml-[72px] flex justify-center p-0">
+    <div className="min-h-[1500px]  flex justify-center w-full ">
       <Repositories>
-        <div className="relative">
-          <h2 className="text-xl font-bold text-blue-400 mb-4">
-            Reach Out Via Socials
+        <div className="relative w-full px-4 sm:px-6 lg:px-8 py-8">
+          <h2 className="text-2xl font-bold text-blue-500 mb-6 text-center">
+            Socials
           </h2>
-          <ul className="list-none space-y-2">
+          <ul className="list-none space-y-4">
             {socials.map((social, index) => (
-              <li key={index} className="flex gap-2">
-                <span className="font-semibold">{social.name}:</span>
+              <li key={index} className="flex flex-col sm:flex-row sm:items-center text-sm sm:text-base">
+                <span className="font-semibold mr-1">{social.name} : </span>
                 <a
-                  className="text-blue-300"
+                  className="text-blue-500 underline break-all"
                   href={social.link}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                 >
                   {social.link}
                 </a>
-                <span></span>
               </li>
             ))}
           </ul>

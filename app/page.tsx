@@ -8,9 +8,8 @@ import ME from "@/app/(portfolio)/about/page";
 export default async function Index() {
   return (
     <>
-      {/* <Hero /> */}
-      <div className="min-h-full flex-1 flex flex-col gap-6 h-full ml-12">
-        <DigitalClockPage />
+      {/* <Hero /> */} <DigitalClockPage />
+      <div className="min-h-full flex-1 flex flex-col gap-6 h-full md:px-12 md:pb-12 ">
         {/* <Git /> */}
         <div className="py-20 ">
           <Projects />

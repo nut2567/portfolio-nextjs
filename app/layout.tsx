@@ -35,9 +35,9 @@ export default function RootLayout({
           {/* <DeployButton /> */}
           {/* {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />} */}
           <div className="min-h-full flex flex-col items-center ">
-            <div className="flex-1 flex flex-col items-center w-full h-full  ">
+            <div className="flex-1 flex flex-col items-center w-full h-full  pl-10 md:pl-12  ">
               <Headerbar />
-              <div className="flex flex-col h-full w-full">
+              <div className="flex flex-col h-full w-full ">
                 {children}
               </div>
             </div>

@@ -28,7 +28,7 @@ const FullScreenDiv: React.FC<{ children: React.ReactNode }> = ({
     <div
       className={`transition-height duration-300 ease-in-out 
         bg-gray-800 text-white p-6 rounded-lg text-xl
-        ${isResized ? "h-fit mt-56 w-3/5 mx-12" : "h-screen w-full -mr-12 -mt-[22px]"} `}
+        ${isResized ? "h-fit mt-60 w-fit mx-12" : "h-screen w-full "} `}
     >
       {children}
       {!isResized && (

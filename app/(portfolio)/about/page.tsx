@@ -27,7 +27,7 @@ export default function About() {
   const [repositories, setRepositories] = useState([]);
 
   return (
-    <div className="grid items-center justify-items-center">
+    <div className="grid items-center justify-items-center pb-12">
       <div className="">
         <DownloadPdfButton />
       </div>

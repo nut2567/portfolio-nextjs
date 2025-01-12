@@ -1,7 +1,7 @@
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main
-      className="-m-12 pr-12 py-12 h-full min-h-screen flex"
+      className=" pr-12 py-12 h-full min-h-screen flex"
       style={{
         background:
           "linear-gradient(90deg, #001930 0%, #00488a 35%, #00488a 50%, #00488a 65%, #001930)",

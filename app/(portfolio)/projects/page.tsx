@@ -59,7 +59,7 @@ export default async function Git() {
         <div className="container mx-auto p-4">
           <div className=" flex">
             <h1 className="text-xl font-bold text-blue-200 mb-5">
-              Project on this 1 projects
+              Project on this {data.length} projects
             </h1>
           </div>
         </div>
