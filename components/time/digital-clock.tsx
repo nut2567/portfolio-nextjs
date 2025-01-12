@@ -20,7 +20,7 @@ function CurrentTime() {
 
   return (
     <div className="flex">
-      <h2 className="font-sans text-[#8b5cf6] text-3xl font-bold mb-5">
+      <h2 className="font-sans text-[#8b5cf6] text-lg md:text-2xl font-bold mb-5">
         {currentTime.toLocaleDateString("th-TH", {
           weekday: "long",
           year: "numeric",
@@ -56,12 +56,12 @@ const DigitalClockPage = () => {
   return (
     <div
       className={`flex justify-center border bg-gradient-to-r from-[#261139] via-indigo-500 to-[#4e1431] py-5 mb-5 
-        shadow relative transition-height duration-1000 ease-in-out 
-        ${isResized ? "h-fit mt-56 -mx-12" : "h-screen -mx-16 pt-[250px] -mt-12"}`}
+        shadow relative transition-height duration-1000 ease-in-out w-full 
+        ${isResized ? "h-fit mt-56 " : "h-screen pt-20 md:pt-[250px] "}`}
       style={{ boxShadow: "rgba(0, 0, 0, 0.5) 0px -10px 60px inset" }}
     >
       <Card
-        className="h-fit p-8 shadow-2xl rounded-3xl bg-[#303640] bg-opacity-80 backdrop-blur-md"
+        className="h-fit md:p-8 p-2 pb-8 pt-4 shadow-2xl rounded-3xl bg-[#303640] bg-opacity-80 backdrop-blur-md"
         style={{ boxShadow: "#6366a1 0px -5px 40px inset" }}
       >
         <div className="flex flex-col items-center justify-center">
@@ -79,8 +79,8 @@ const DigitalClockPage = () => {
           className="flex justify-center border-b border-b-foreground/10 h-16 z-40 absolute inset-x-[48%] 
         bottom-[80px] items-center"
         >
-          <div className="w-full flex font-semibold items-center p-3 text-sm">
-            <div className="transition-transform duration-1000 animate-bounce gap-5 justify-between">
+          <div className="w-full flex font-semibold items-center text-sm">
+            <div className="transition-transform duration-1000 animate-bounce  justify-between md:m-[-20px] sm:m-[-20px]">
               <p className="m-[5px]">Scroll</p>
               <i
                 className={` material-icons  items-center flex`}

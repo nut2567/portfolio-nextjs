@@ -93,7 +93,7 @@ const TimerCircle: React.FC<PageProps> = ({ time, minutes, hours }) => {
     }
   }, [time, minutes, hours])
 
-  return <canvas ref={canvasRef} width={200} height={200} />
+  return <canvas ref={canvasRef} width={180} height={180} />
 }
 
 export default TimerCircle

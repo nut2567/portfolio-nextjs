@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import { ThemeSwitcher } from "@/components/supabase/theme-switcher";
-export default function Layout({}) {
+export default function Layout({ }) {
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-black z-40 sticky top-0">
-      <div className="w-full pl-24 flex font-semibold justify-between items-center p-3 text-sm">
+      <div className="w-full pl-14 md:pl-24 md:p-3 pt-3 flex font-semibold justify-between items-centerpr-0 gap-2 text-sm">
         <div className="flex gap-5">
           <p>Portfolio</p>
           <p>Nutthawat Witdumrong</p>

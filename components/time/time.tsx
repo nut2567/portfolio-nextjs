@@ -9,38 +9,43 @@ function Countdown() {
   };
 
   return (
-    <div className="grid grid-flow-col gap-[90px] text-center auto-cols-max ">
-      <div className="relative">
-        <div className="absolute top-[-55px] left-[-65px]">
+    <div className="flex flex-col md:flex-row gap-16 md:gap-12 items-center justify-center">
+      {/* Hours */}
+      <div className="relative flex flex-col items-center">
+        <div className="absolute top-[-65px] md:top-[-50px] left-1/2 transform -translate-x-1/2 ">
           <TimerCircle time={""} minutes={""} hours={hours} />
         </div>
-        <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-          <span className="countdown font-mono text-5xl">
+        <div className="flex flex-col items-center bg-neutral rounded-box text-neutral-content p-3">
+          <span className="countdown font-mono text-xl sm:text-2xl md:text-4xl">
             <span style={styleWithCustomProperty(hours)}></span>
           </span>
-          hours
+          <span className="text-xs sm:text-sm md:text-base">hours</span>
         </div>
       </div>
-      <div className="relative">
-        <div className="absolute top-[-55px] left-[-65px]">
+
+      {/* Minutes */}
+      <div className="relative flex flex-col items-center">
+        <div className="absolute top-[-65px] md:top-[-50px] sm:left-1/2  left-1/2 transform -translate-x-1/2">
           <TimerCircle time={""} minutes={minutes} hours={""} />
         </div>
-        <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-          <span className="countdown font-mono text-5xl">
+        <div className="flex flex-col items-center bg-neutral rounded-box text-neutral-content p-3">
+          <span className="countdown font-mono text-xl sm:text-2xl md:text-4xl">
             <span style={styleWithCustomProperty(minutes)}></span>
           </span>
-          min
+          <span className="text-xs sm:text-sm md:text-base">minutes</span>
         </div>
       </div>
-      <div className="relative">
-        <div className="absolute top-[-55px] left-[-65px]">
+
+      {/* Seconds */}
+      <div className="relative flex flex-col items-center">
+        <div className="absolute top-[-65px] md:top-[-50px] left-1/2 transform -translate-x-1/2">
           <TimerCircle time={seconds} minutes={""} hours={""} />
         </div>
-        <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-          <span className="countdown font-mono text-5xl">
+        <div className="flex flex-col items-center bg-neutral rounded-box text-neutral-content p-3">
+          <span className="countdown font-mono text-xl sm:text-2xl md:text-4xl">
             <span style={styleWithCustomProperty(seconds)}></span>
           </span>
-          sec
+          <span className="text-xs sm:text-sm md:text-base">seconds</span>
         </div>
       </div>
     </div>

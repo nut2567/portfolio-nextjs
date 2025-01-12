@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
       <Header />
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground ">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -34,14 +34,14 @@ export default function RootLayout({
           <SideNavigation />
           {/* <DeployButton /> */}
           {/* {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />} */}
-          <main className="min-h-screen flex flex-col items-center w-full">
-            <div className="flex-1 w-full flex flex-col items-center h-full">
+          <div className="min-h-full flex flex-col items-center ">
+            <div className="flex-1 flex flex-col items-center w-full h-full  ">
               <Headerbar />
-              <div className="flex flex-col w-full p-12 pl-24  h-full">
+              <div className="flex flex-col h-full w-full">
                 {children}
               </div>
             </div>
-          </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
