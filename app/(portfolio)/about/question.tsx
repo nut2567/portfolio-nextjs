@@ -4,10 +4,10 @@ export default function Question({ repositories }: { repositories: any[] }) {
   console.log(repositories);
   return (
     <div
-      className="border rounded-lg shadow p-4 relative bg-[#0000003d] "
+      className="border  text-sm md:text-xl rounded-lg shadow p-4 relative bg-[#0000003d] "
       style={{ boxShadow: "#0097ff40 0px -10px 60px inset" }}
     >
-      <div className="collapse collapse-plus bg-base-200 mb-4">
+      <div className="collapse collapse-plus bg-base-200 mb-4 break-all">
         <input type="radio" name="my-accordion-3" defaultChecked />
         <div className="collapse-title font-medium w-fit">
           <h1 className=" font-bold text-blue-200 mb-5 break-words">
@@ -155,30 +155,40 @@ export default function Question({ repositories }: { repositories: any[] }) {
             ซึ่งเป็นวิธีการที่ช่วยให้จดจำได้ดีกว่าการเรียนรู้ทฤษฎีอย่างเดียว
             วิธีนี้ช่วยให้ได้ประสบการณ์ตรงและเข้าใจข้อดีข้อเสียของเทคโนโลยีมากขึ้น
           </p>
-          <a
-            className="mr-2"
-            href={`https://portfolio-nutthawat-nextjs.vercel.app/`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="btn btn-primary">portfolio</button>
-          </a>
-          <a
-            className="mr-2"
-            href={`https://point-system-nuxt.vercel.app/home`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="btn btn-primary">point-system-nuxt</button>
-          </a>
-          <a
-            className="mr-2"
-            href={`https://point-system-backoffice.vercel.app/`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="btn btn-primary">point-system-backoffice</button>
-          </a>
+          <div className="">
+            <a
+              className="mr-2"
+              href={`https://portfolio-nutthawat-nextjs.vercel.app/`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="btn btn-primary">portfolio</button>
+            </a>
+            <a
+              className="mr-2"
+              href={`https://learning-management-system-nutdeploys-projects.vercel.app/`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="btn btn-primary">learning-management-system</button>
+            </a>
+            <a
+              className="mr-2"
+              href={`https://point-system-nuxt.vercel.app/home`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="btn btn-primary">point-system-nuxt</button>
+            </a>
+            <a
+              className="mr-2"
+              href={`https://point-system-backoffice.vercel.app/`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="btn btn-primary">point-system-backoffice</button>
+            </a></div>
+
           user admin:1234
           <p>
             การใช้หลายวิธีนี้ช่วยให้ผมสามารถติดตามเทรนด์และเข้าใจการเปลี่ยนแปลงในวงการได้ดีขึ้น
