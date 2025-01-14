@@ -34,7 +34,7 @@ export default function About() {
       <div className=" w-3/4">
         <Suspense fallback={<Loading />}>
           <div
-            className="text-white w-full rounded-lg text-xl mb-4"
+            className="text-white w-full rounded-lg text-sm md:text-xl mb-4"
             style={{ backgroundColor: "#2e2110", color: "#cac5be" }}
           >
             <ul className="list-none space-y-4 md:space-y-0 md:flex md:space-x-4">
@@ -50,12 +50,12 @@ export default function About() {
                 />
               </div>
               <div className="p-6 w-full md:w-2/3">
-                <h1 className="text-4xl md:text-6xl font-bold">
+                <h1 className="text-sm md:text-4xl font-bold">
                   Mr. Nutthawat Witdumrong
                 </h1>
 
                 <h1
-                  className="text-2xl md:text-4xl font-bold border-t border-lime-400 pt-2"
+                  className="text-sm md:text-4xl font-bold border-t border-lime-400 pt-2"
                   style={{ color: "#5de8ec" }}
                 >
                   Software Engineer

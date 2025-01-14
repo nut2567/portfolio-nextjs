@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, Variants, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Repository = {
   name: string;
@@ -30,10 +30,13 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
   };
-
+  const [width, setWidth] = useState(0)
+  useEffect(() => {
+    setWidth(window.outerWidth)
+  }, [])
   return (
-    <>
-      <table className="table-auto w-full border-collapse border border-gray-300 mt-6">
+    <div className="w-full">
+      <table className="table-auto w-full border-collapse border border-gray-300 mt-6 text-sm md:text-base">
         <thead>
           <tr className="bg-gray-800 text-white">
             <th className="border border-gray-300 px-4 py-2 text-left">
@@ -54,17 +57,22 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
             }, 0);
 
             return (
-              <tr key={repo.name} className="bg-base-100 hover:bg-gray-600">
-                <td className="border border-gray-300 px-4 py-4">
+              <tr
+                key={repo.name}
+                className="bg-base-100 hover:bg-gray-600 flex flex-col md:table-row"
+              >
+                <td
+                  className="border border-gray-300 px-4 py-4 md:flex md:items-center"
+                  ref={ref}
+                >
                   <motion.div
-                    ref={ref}
-                    className="collapse collapse-plus w-full border border-gray-300"
+                    className="collapse collapse-plus w-full"
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
                     variants={fadeIn}
                     transition={{
                       duration: 0.5,
-                      delay: index * 0.2, // เพิ่ม delay ไล่ตาม index
+                      delay: index * 0.2,
                       ease: [0, 0.71, 0.2, 1.01],
                     }}
                   >
@@ -74,43 +82,35 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
                       className="peer hidden"
                     />
                     <label
-                      htmlFor={`collapse-${repo.name}`}
-                      className="collapse-title cursor-pointer flex items-center justify-between p-4 bg-base-200"
+
+                      className="collapse-title cursor-pointer flex flex-col md:flex-row items-start justify-between p-4 bg-base-200"
                     >
-                      <div className="card">
-                        <span className="font-bold">
-                          {index + 1}. - {repo.name}
-                        </span>
-                        <span>
-                          ⭐ {repo.stargazerCount} | 👁️ {repo.watchers} watchers
-                          | 🍴 {repo.forkCount} forks
-                        </span>
-                        <span>Total Commits: {totalCommits}</span>
+                      <div className="md:w-full" style={{
+                        width: `${width / 2}px`,
+                      }}>
+                        <label className="font-bold break-words">{index + 1}. {repo.name}</label>
+                        <p>⭐ {repo.stargazerCount} | 👁️ {repo.watchers} | 🍴 {repo.forkCount}</p>
+                        <p>Total Commits: {totalCommits}</p>
                       </div>
-                      <span className="text-blue-500">Details</span>
+                      <label htmlFor={`collapse-${repo.name}`} className="text-blue-500">More Details</label>
                     </label>
 
                     <div className="collapse-content bg-gray-400 p-4 text-gray-800">
-                      <div className="grid smb:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12 w-full">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {repo.refs.nodes.map((branch) => (
                           <div
                             key={branch.name}
-                            className="flex flex-col items-start justify-start"
+                            className="flex flex-col border-t pt-2"
                           >
-                            <p className="font-semibold ">
-                              Branch: {branch.name}
-                            </p>
-                            <p>
-                              {branch.target.history?.totalCount || 0} commits
-                            </p>
+                            <p className="font-semibold">Branch: {branch.name}</p>
+                            <p>{branch.target.history?.totalCount || 0} commits</p>
                             <div
-                              className="my-3 bg-green-600 h-3 rounded"
+                              className="my-2 bg-green-600 h-3 rounded"
                               style={{
-                                width: `${
-                                  branch.target.history?.totalCount
-                                    ? branch.target.history.totalCount * 10
-                                    : 0
-                                }px`,
+                                width: `${branch.target.history?.totalCount
+                                  ? branch.target.history.totalCount * 10
+                                  : 0
+                                  }px`,
                               }}
                             ></div>
                           </div>
@@ -134,9 +134,10 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
+
 
 export function RepositoryTable({ repositoriesWithWatchers }: Props) {
   return (
@@ -161,7 +162,7 @@ export function RepositoryTable({ repositoriesWithWatchers }: Props) {
               className="bg-white hover:bg-gray-100 transition-colors"
             >
               <td className="border border-gray-300 px-4 py-4">
-                <div className="collapse collapse-plus bg-gray-50 border border-gray-300">
+                {/* <div className="collapse collapse-plus bg-gray-50 border border-gray-300">
                   <input
                     type="checkbox"
                     id={`collapse-${repo.name}`}
@@ -202,11 +203,10 @@ export function RepositoryTable({ repositoriesWithWatchers }: Props) {
                           <div
                             className="my-3 bg-green-600 h-3 rounded"
                             style={{
-                              width: `${
-                                branch.target.history?.totalCount
+                              width: `${branch.target.history?.totalCount
                                   ? branch.target.history.totalCount * 10
                                   : 0
-                              }px`,
+                                }px`,
                             }}
                           ></div>
                         </div>
@@ -223,7 +223,7 @@ export function RepositoryTable({ repositoriesWithWatchers }: Props) {
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </td>
             </tr>
           );

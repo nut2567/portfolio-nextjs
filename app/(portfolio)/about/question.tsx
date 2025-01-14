@@ -9,8 +9,8 @@ export default function Question({ repositories }: { repositories: any[] }) {
     >
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" defaultChecked />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
+        <div className="collapse-title font-medium w-fit">
+          <h1 className=" font-bold text-blue-200 mb-5 break-words">
             ตำแหน่งงานที่อยากทำ และหน้าที่งานที่รับผิดชอบ
           </h1>
         </div>
@@ -25,8 +25,8 @@ export default function Question({ repositories }: { repositories: any[] }) {
       </div>
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
+        <div className="collapse-title  font-medium">
+          <h1 className=" font-bold text-blue-200 mb-5">
             เงินเดือนที่คาดหวัง
           </h1>
         </div>
@@ -37,8 +37,8 @@ export default function Question({ repositories }: { repositories: any[] }) {
 
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
+        <div className="collapse-title  font-medium">
+          <h1 className=" font-bold text-blue-200 mb-5">
             สถานที่พักเมื่อทำงาน
           </h1>
         </div>
@@ -57,8 +57,8 @@ export default function Question({ repositories }: { repositories: any[] }) {
 
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" className="peer" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
+        <div className="collapse-title  font-medium">
+          <h1 className=" font-bold text-blue-200 mb-5">
             วิธีการแก้ไขและตรวจสอบหาข้อผิดพลาดของโปรแกรม (Bugs)
           </h1>
         </div>
@@ -88,8 +88,8 @@ export default function Question({ repositories }: { repositories: any[] }) {
       </div>
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" className="peer" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
+        <div className="collapse-title  font-medium">
+          <h1 className=" font-bold text-blue-200 mb-5">
             ปัญหาทางเทคนิคที่ซับซ้อนที่สุดที่คุณเคยเจอ แล้วคุณแก้มันได้ยังไง?
           </h1>
         </div>
@@ -126,8 +126,8 @@ export default function Question({ repositories }: { repositories: any[] }) {
       </div>
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
+        <div className="collapse-title  font-medium">
+          <h1 className=" font-bold text-blue-200 mb-5">
             วิธีการที่คุณใช้เพื่ออัพเดทเทรนด์และเทคโนโลยีใหม่ๆ ในวงการคืออะไร?
             ลองอธิบาย
           </h1>
@@ -191,8 +191,8 @@ export default function Question({ repositories }: { repositories: any[] }) {
 
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">
-          <h1 className="text-xl font-bold text-blue-200 mb-5">
+        <div className="collapse-title  font-medium">
+          <h1 className=" font-bold text-blue-200 mb-5">
             หัวข้อต่างๆ ในการพัฒนาเว็บด้วย JavaScript, React, และ Next.js ดังนี้
           </h1>
         </div>

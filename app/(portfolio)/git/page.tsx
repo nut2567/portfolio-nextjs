@@ -148,10 +148,10 @@ export default async function Git() {
   );
 
   return (
-    <div className="rounded-lg md:px-12">
+    <div className="rounded-lg md:px-12 px-2">
       <Suspense fallback={<Loading />}>
         <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
-          <ul className="list-none space-y-2 flex items-center gap-4">
+          <ul className="list-none flex flex-col md:flex-row items-center gap-4">
             <div className="mx-5">
               <Image
                 className="rounded-full"

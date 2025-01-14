@@ -10,7 +10,7 @@ export default async function Index() {
     <>
       {/* <Hero /> */} <DigitalClockPage />
       <div className="min-h-full flex-1 flex flex-col gap-6 h-full md:px-12 md:pb-12 ">
-        {/* <Git /> */}
+        <Git />
         <div className="py-20 ">
           <Projects />
         </div>
