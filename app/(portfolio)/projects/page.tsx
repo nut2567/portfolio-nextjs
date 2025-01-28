@@ -33,9 +33,6 @@ export default async function Git() {
     },
   ];
 
-  if (!projects.length) {
-    return <div className="text-center">No projects found.</div>; // แสดงข้อความเมื่อไม่มีโปรเจกต์
-  }
 
   return (
     <div>
@@ -74,12 +71,16 @@ export default async function Git() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {projects.map((project: Project, index: number) => {
-              project.directionx = Math.random() > 0.5 ? -100 : 100;
-              project.directiony = Math.random() > 0.5 ? -100 : 100;
-              project.index = index;
-              return <ProjectCard key={project.name} project={project} />;
-            })}
+
+            {!projects.length ? (<div className="text-center">No projects found.</div>) : (
+
+              projects.map((project: Project, index: number) => {
+                project.directionx = Math.random() > 0.5 ? -100 : 100;
+                project.directiony = Math.random() > 0.5 ? -100 : 100;
+                project.index = index;
+                return <ProjectCard key={project.name} project={project} />;
+              })
+            )}
           </div>
         </div>
       </Suspense>

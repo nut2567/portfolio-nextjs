@@ -1,8 +1,14 @@
-import { useRealTime } from "./useRealTime";
+"use client";
+import React, {
+  useState, useEffect
+  , useContext
+} from "react";
 import TimerCircle from "./TimerCircle";
-
+import { DataUseContext } from "./digital-clock";
+import { useRealTime } from "./useRealTime";
 function Countdown() {
-  const { hours, minutes, seconds } = useRealTime(true); // หรือ false ถ้าต้องการ 12 ชั่วโมง
+  const { hours, minutes, seconds } = useContext(DataUseContext); // หรือ false ถ้าต้องการ 12 ชั่วโมง
+  // const { hours, minutes, seconds } = useRealTime(true); // หรือ false ถ้าต้องการ 12 ชั่วโมง
 
   const styleWithCustomProperty = (time: string) => {
     return { "--value": time.toString() } as React.CSSProperties;

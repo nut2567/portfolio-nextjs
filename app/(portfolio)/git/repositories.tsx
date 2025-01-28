@@ -32,8 +32,20 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
   };
   const [width, setWidth] = useState(0)
   useEffect(() => {
-    setWidth(window.outerWidth)
+
+    const handleResize = () => {
+      setWidth(window.innerWidth)
+      console.log('>>>> :', window.innerWidth)
+    };
+    // เพิ่ม Listener
+    window.addEventListener("resize", handleResize);
+
+    // ลบ Listener (ตัวอย่าง)
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    }
   }, [])
+
   return (
     <div className="w-full">
       <table className="table-auto w-full border-collapse border border-gray-300 mt-6 text-sm md:text-base">
@@ -85,14 +97,15 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
 
                       className="collapse-title cursor-pointer flex flex-col md:flex-row items-start justify-between p-4 bg-base-200"
                     >
-                      <div className="md:w-full" style={{
-                        width: `${width / 2}px`,
-                      }}>
+                      <div
+                        // className={`md:w-2/3 w-${width * 0 ? `[${width / 2}px]` : '2/3'}`} 
+                        style={{ width: '70%' }}
+                      >
                         <label className="font-bold break-words">{index + 1}. {repo.name}</label>
                         <p>⭐ {repo.stargazerCount} | 👁️ {repo.watchers} | 🍴 {repo.forkCount}</p>
                         <p>Total Commits: {totalCommits}</p>
                       </div>
-                      <label htmlFor={`collapse-${repo.name}`} className="text-blue-500">More Details</label>
+                      <label htmlFor={`collapse-${repo.name}`} className="text-blue-500 mt-auto cursor-pointer">More Details</label>
                     </label>
 
                     <div className="collapse-content bg-gray-400 p-4 text-gray-800">
@@ -138,97 +151,3 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
   );
 }
 
-
-export function RepositoryTable({ repositoriesWithWatchers }: Props) {
-  return (
-    <table className="table-auto w-full border-collapse border border-gray-300 mt-6">
-      <thead>
-        <tr className="bg-gray-800 text-white">
-          <th className="border border-gray-300 px-4 py-2 text-left">
-            Repository Details
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {repositoriesWithWatchers.map((repo) => {
-          const totalCommits = repo.refs.nodes.reduce(
-            (sum, branch) => sum + (branch.target.history?.totalCount || 0),
-            0
-          );
-
-          return (
-            <tr
-              key={repo.name}
-              className="bg-white hover:bg-gray-100 transition-colors"
-            >
-              <td className="border border-gray-300 px-4 py-4">
-                {/* <div className="collapse collapse-plus bg-gray-50 border border-gray-300">
-                  <input
-                    type="checkbox"
-                    id={`collapse-${repo.name}`}
-                    className="peer hidden"
-                  />
-                  <label
-                    htmlFor={`collapse-${repo.name}`}
-                    className="collapse-title cursor-pointer flex items-center justify-between p-4"
-                  >
-                    <div className="flex flex-col">
-                      <span className="font-bold text-gray-800">
-                        {repo.name}
-                      </span>
-                      <span className="text-gray-600 text-sm">
-                        ⭐ {repo.stargazerCount} | 👁️ {repo.watchers} watchers |
-                        🍴 {repo.forkCount} forks
-                      </span>
-                      <span className="text-gray-500 text-sm">
-                        Total Commits: {totalCommits}
-                      </span>
-                    </div>
-                    <span className="text-blue-500 font-semibold">Details</span>
-                  </label>
-
-                  <div className="collapse-content bg-white p-4">
-                    <div className="space-y-4">
-                      {repo.refs.nodes.map((branch) => (
-                        <div
-                          key={branch.name}
-                          className="flex flex-col items-start justify-start"
-                        >
-                          <p className="font-semibold text-gray-800">
-                            Branch: {branch.name}
-                          </p>
-                          <p className="text-gray-600">
-                            {branch.target.history?.totalCount || 0} commits
-                          </p>
-                          <div
-                            className="my-3 bg-green-600 h-3 rounded"
-                            style={{
-                              width: `${branch.target.history?.totalCount
-                                  ? branch.target.history.totalCount * 10
-                                  : 0
-                                }px`,
-                            }}
-                          ></div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="text-right mt-4">
-                      <a
-                        href={repo.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-                      >
-                        View Repository
-                      </a>
-                    </div>
-                  </div>
-                </div> */}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-}

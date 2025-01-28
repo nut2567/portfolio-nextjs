@@ -79,18 +79,18 @@ const ProjectCard = ({ project }: { project: Project }) => {
           })}
         </p>
       </div>
-      <motion.button
+      <a
+        href={`https://${project.latestDeployments[0]?.alias[0]}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      ><motion.button
         whileTap={{ scale: 0.9, rotate: 3 }}
         className="btn btn-primary mt-auto absolute bottom-6 left-6 right-6"
       >
-        <a
-          href={`https://${project.latestDeployments[0]?.alias[0]}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
           View Project
-        </a>
-      </motion.button>
+
+        </motion.button></a>
     </motion.div>
   );
 };
