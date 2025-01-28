@@ -1,7 +1,7 @@
 import { Key, Suspense } from "react";
 import Loading from "./loading";
 import Image from "next/image";
-import Repositories, { RepositoryTable } from "./repositories";
+import Repositories from "./repositories";
 import ContributionWeeks from "./contributionWeeks";
 import prettier from "prettier";
 
