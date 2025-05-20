@@ -19,7 +19,7 @@ export default async function Git() {
     },
     {
       name: "Motions",
-      Libraries: "framer-motion",
+      Libraries: "motion/react",
       link: "/projects/motion",
       randomdelay: Math.random() * 0.5,
       randomdirection: Math.random() > 0.5 ? -100 : 100,
@@ -32,7 +32,6 @@ export default async function Git() {
       randomdirection: Math.random() > 0.5 ? -100 : 100,
     },
   ];
-
 
   return (
     <div>
@@ -71,9 +70,9 @@ export default async function Git() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-            {!projects.length ? (<div className="text-center">No projects found.</div>) : (
-
+            {!projects.length ? (
+              <div className="text-center">No projects found.</div>
+            ) : (
               projects.map((project: Project, index: number) => {
                 project.directionx = Math.random() > 0.5 ? -100 : 100;
                 project.directiony = Math.random() > 0.5 ? -100 : 100;

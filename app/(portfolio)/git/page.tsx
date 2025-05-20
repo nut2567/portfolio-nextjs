@@ -5,13 +5,57 @@ import Repositories from "./repositories";
 import ContributionWeeks from "./contributionWeeks";
 import prettier from "prettier";
 
+// Interface for the raw repository data from GraphQL
+interface RawRepositoryNode {
+  id: string;
+  name: string;
+  url: string;
+  stargazerCount: number;
+  forkCount: number;
+  isPrivate: boolean;
+  primaryLanguage?: {
+    name: string;
+    color: string;
+  };
+  updatedAt: string;
+  createdAt: string;
+  licenseInfo?: {
+    name: string;
+  };
+  refs: {
+    nodes: {
+      name: string;
+      target: {
+        history?: {
+          totalCount: number;
+        };
+      };
+    }[];
+  };
+  watchers: {
+    // Added from GraphQL
+    totalCount: number;
+  };
+}
+
+// Updated Repository interface for processed data
 interface Repository {
   id: string;
   name: string;
   url: string;
   stargazerCount: number;
   forkCount: number;
-  watchers: number;
+  watchers: number; // Transformed from RawRepositoryNode.watchers.totalCount
+  isPrivate: boolean;
+  primaryLanguage?: {
+    name: string;
+    color: string;
+  };
+  updatedAt: string;
+  createdAt: string;
+  licenseInfo?: {
+    name: string;
+  };
   refs: {
     nodes: {
       name: string;
@@ -29,7 +73,7 @@ interface Viewer {
   avatarUrl: string;
   url: string;
   repositories: {
-    nodes: Repository[];
+    nodes: RawRepositoryNode[]; // Use RawRepositoryNode here
   };
   contributionsCollection: {
     totalCommitContributions: number;
@@ -86,6 +130,9 @@ export default async function Git() {
               }
             }
           }
+          watchers { # Added watchers here
+            totalCount
+          }
         }
       }
       contributionsCollection {
@@ -121,31 +168,22 @@ export default async function Git() {
   });
 
   const json = await res.json();
-  const viewer: Viewer = json.data.viewer;
-  const repositories: Repository[] = viewer.repositories.nodes;
-  const contributionsCollection = viewer.contributionsCollection;
-  const contributionCalendar = contributionsCollection.contributionCalendar;
-  const totalContributions = contributionCalendar.totalContributions;
-  const contributionWeeks = contributionCalendar.weeks;
+  const viewer: Viewer | undefined = json?.data?.viewer; // Allow viewer to be undefined
 
-  // ดึงข้อมูล watchers สำหรับแต่ละ repository
-  const repositoriesWithWatchers = await Promise.all(
-    repositories.map(async (repo) => {
-      const repoResponse = await fetch(
-        `https://api.github.com/repos/${viewer.login}/${repo.name}`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-          },
-        }
-      );
-      const repoData = await repoResponse.json();
-      return {
+  const rawRepositories: RawRepositoryNode[] | undefined =
+    viewer?.repositories?.nodes;
+  const contributionsCollection = viewer?.contributionsCollection;
+  const contributionCalendar = contributionsCollection?.contributionCalendar;
+  const totalContributions = contributionCalendar?.totalContributions;
+  const contributionWeeks = contributionCalendar?.weeks;
+
+  // Process repositories to include watchers count directly
+  const processedRepositories: Repository[] = rawRepositories
+    ? rawRepositories.map((repo) => ({
         ...repo,
-        watchers: repoData.watchers_count, // เพิ่ม watchers
-      };
-    })
-  );
+        watchers: repo.watchers.totalCount,
+      }))
+    : [];
 
   return (
     <div className="rounded-lg md:px-12 px-2">
@@ -164,20 +202,20 @@ export default async function Git() {
               />
             </div>
             <h1 className="text-xl font-bold text-blue-400">
-              Repositories for {viewer.login}
+              Repositories for {viewer?.login}
             </h1>
-            <h1>{repositoriesWithWatchers.length} repositories</h1>
+            <h1>{processedRepositories.length} repositories</h1>
             <h1>{totalContributions} contributions this year</h1>
           </ul>
         </div>
         <ContributionWeeks
-          repositories={repositoriesWithWatchers}
-          contributionWeeks={contributionWeeks}
+          repositories={processedRepositories}
+          contributionWeeks={contributionWeeks ?? []}
           viewer={viewer}
         />
       </Suspense>
       <Suspense>
-        <Repositories repositoriesWithWatchers={repositoriesWithWatchers} />
+        <Repositories repositoriesWithWatchers={processedRepositories} />
       </Suspense>
       <Suspense>
         {/* <RepositoryTable repositoriesWithWatchers={repositoriesWithWatchers} /> */}

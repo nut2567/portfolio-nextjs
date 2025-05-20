@@ -30,12 +30,11 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
   };
-  const [width, setWidth] = useState(0)
+  const [width, setWidth] = useState(0);
   useEffect(() => {
-
     const handleResize = () => {
-      setWidth(window.innerWidth)
-      console.log('>>>> :', window.innerWidth)
+      setWidth(window.innerWidth);
+      console.log(">>>> :", window.innerWidth);
     };
     // เพิ่ม Listener
     window.addEventListener("resize", handleResize);
@@ -43,8 +42,8 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
     // ลบ Listener (ตัวอย่าง)
     return () => {
       window.removeEventListener("resize", handleResize);
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <div className="w-full">
@@ -93,19 +92,26 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
                       id={`collapse-${repo.name}`}
                       className="peer hidden"
                     />
-                    <label
-
-                      className="collapse-title cursor-pointer flex flex-col md:flex-row items-start justify-between p-4 bg-base-200"
-                    >
+                    <label className="collapse-title cursor-pointer flex flex-col md:flex-row items-start justify-between p-4 bg-base-200">
                       <div
-                        // className={`md:w-2/3 w-${width * 0 ? `[${width / 2}px]` : '2/3'}`} 
-                        style={{ width: '70%' }}
+                        // className={`md:w-2/3 w-${width * 0 ? `[${width / 2}px]` : '2/3'}`}
+                        style={{ width: "70%" }}
                       >
-                        <label className="font-bold break-words">{index + 1}. {repo.name}</label>
-                        <p>⭐ {repo.stargazerCount} | 👁️ {repo.watchers} | 🍴 {repo.forkCount}</p>
+                        <label className="font-bold break-words">
+                          {index + 1}. {repo.name}
+                        </label>
+                        <p>
+                          ⭐ {repo.stargazerCount} | 👁️ {repo.watchers} | 🍴{" "}
+                          {repo.forkCount}
+                        </p>
                         <p>Total Commits: {totalCommits}</p>
                       </div>
-                      <label htmlFor={`collapse-${repo.name}`} className="text-blue-500 mt-auto cursor-pointer">More Details</label>
+                      <label
+                        htmlFor={`collapse-${repo.name}`}
+                        className="text-blue-500 mt-auto cursor-pointer"
+                      >
+                        More Details
+                      </label>
                     </label>
 
                     <div className="collapse-content bg-gray-400 p-4 text-gray-800">
@@ -115,15 +121,20 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
                             key={branch.name}
                             className="flex flex-col border-t pt-2"
                           >
-                            <p className="font-semibold">Branch: {branch.name}</p>
-                            <p>{branch.target.history?.totalCount || 0} commits</p>
+                            <p className="font-semibold">
+                              Branch: {branch.name}
+                            </p>
+                            <p>
+                              {branch.target.history?.totalCount || 0} commits
+                            </p>
                             <div
                               className="my-2 bg-green-600 h-3 rounded"
                               style={{
-                                width: `${branch.target.history?.totalCount
-                                  ? branch.target.history.totalCount * 10
-                                  : 0
-                                  }px`,
+                                width: `${
+                                  branch.target.history?.totalCount
+                                    ? branch.target.history.totalCount * 10
+                                    : 0
+                                }px`,
                               }}
                             ></div>
                           </div>
@@ -150,4 +161,3 @@ export default function Repositories({ repositoriesWithWatchers }: Props) {
     </div>
   );
 }
-
