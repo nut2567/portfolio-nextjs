@@ -6,7 +6,7 @@ import {
 import Image from "next/image";
 import Repositories from "./repositories";
 import ContributionWeeks from "./contributionWeeks";
-import prettier from "prettier";
+import GitProfileHeader from "./GitProfileHeader"; // New component
 
 // Interface for the raw repository data from GraphQL
 interface RawRepositoryNode {
@@ -157,8 +157,6 @@ export default async function Git() {
     }
   }
 `;
-  // Format the query using Prettier
-  const formattedQuery = prettier.format(query, { parser: "graphql" });
 
   // เรียกใช้งาน GraphQL API
   const res = await fetch("https://api.github.com/graphql", {
@@ -167,11 +165,12 @@ export default async function Git() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, // ใส่ Token ของคุณแทนที่ process.env.GITHUB_TOKEN
     },
+    next: { revalidate: 3600 }, // Add revalidation
     body: JSON.stringify({ query }),
   });
 
   const json = await res.json();
-  const viewer: Viewer | undefined = json?.data?.viewer; // Allow viewer to be undefined
+  const viewer: Viewer | undefined = json?.data?.viewer;
 
   const rawRepositories: RawRepositoryNode[] | undefined =
     viewer?.repositories?.nodes;
@@ -180,7 +179,6 @@ export default async function Git() {
   const totalContributions = contributionCalendar?.totalContributions;
   const contributionWeeks = contributionCalendar?.weeks;
 
-  // Process repositories to include watchers count directly
   const processedRepositories: Repository[] = rawRepositories
     ? rawRepositories.map((repo) => ({
         ...repo,
@@ -190,32 +188,13 @@ export default async function Git() {
 
   return (
     <div className="rounded-lg md:px-12 px-2">
-      <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
-        <ul className="list-none flex flex-col md:flex-row items-center gap-4">
-          <div className="mx-5">
-            <ViewTransition name={`nutimage`}>
-              <Image
-                className="rounded-full"
-                src="/images/nut.jpg"
-                alt="me"
-                width={150}
-                height={0}
-                priority
-              />
-            </ViewTransition>
-          </div>
-          <h1 className="text-xl font-bold text-blue-400">
-            Repositories for {viewer?.login}
-          </h1>
-          <h1>{processedRepositories.length} repositories</h1>
-          <h1>{totalContributions} contributions this year</h1>
-        </ul>
-      </div>
-      <ContributionWeeks
-        repositories={processedRepositories}
-        contributionWeeks={contributionWeeks ?? []}
-        viewer={viewer}
+      <GitProfileHeader
+        login={viewer?.login}
+        avatarUrl={viewer?.avatarUrl}
+        repositoriesCount={processedRepositories.length}
+        totalContributions={totalContributions}
       />
+      <ContributionWeeks contributionWeeks={contributionWeeks ?? []} />
       <Suspense>
         <Repositories repositoriesWithWatchers={processedRepositories} />
       </Suspense>

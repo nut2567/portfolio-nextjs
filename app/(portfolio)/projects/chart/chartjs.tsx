@@ -142,38 +142,22 @@ const ChartComponent = () => {
 
   return (
     <div>
-      <div className="bg-gray-800 text-white w-full p-6 rounded-lg text-xl mb-4">
-        <ul className="list-none space-y-2 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-blue-400">
-            แสดงข้อมูล Total population growth country 1950 to 2021
-          </h1>
-          <button title={`projects`} className="mt-4">
-            <Link href="/projects">
-              <div className="btn btn-primary rounded ">ย้อนกลับ</div>
-            </Link>
-          </button>
-        </ul>
-      </div>
-
-      <div style={{ position: "relative" }} className="mb-20">
-        <h2>Top 12 Countries by Population</h2>
-        <Bar data={chartData} options={options} />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 250,
-            right: 0,
-            fontWeight: "bold",
-            padding: "10px",
-          }}
-        >
-          <h1 style={{ fontSize: "24px" }}>
-            World Population: {groupedData["World"]?.toLocaleString() || "N/A"}
-          </h1>
-          <h1 style={{ fontSize: "44px" }}>
-            {years[0]} - {years[years.length - 1]}
-          </h1>
-        </div>
+      <Bar data={chartData} options={options} />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 250,
+          right: 0,
+          fontWeight: "bold",
+          padding: "10px",
+        }}
+      >
+        <h1 style={{ fontSize: "24px" }}>
+          World Population: {groupedData["World"]?.toLocaleString() || "N/A"}
+        </h1>
+        <h1 style={{ fontSize: "44px" }}>
+          {years[0]} - {years[years.length - 1]}
+        </h1>
       </div>
     </div>
   );

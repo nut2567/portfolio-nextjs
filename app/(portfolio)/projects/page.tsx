@@ -6,16 +6,18 @@ import {
 import Image from "next/image";
 import Repositories from "./repositories";
 import ProjectCard, { Project } from "./ProjectCard";
+import type { Project as ProjectProp } from "@/types/project";
 import OnProject from "./onProject";
 import vercelProjects from "./vercelProjects";
 
 export default async function Git() {
   const projects = await vercelProjects();
 
-  const data = [
+  const data: ProjectProp[] = [
     {
       name: "Dashboard Total Population Growth",
       Libraries: "Chartjs",
+      key: "dashboard",
       link: "/projects/chart",
       randomdelay: Math.random() * 0.5,
       randomdirection: Math.random() > 0.5 ? -100 : 100,
@@ -23,6 +25,7 @@ export default async function Git() {
     {
       name: "Motions",
       Libraries: "motion/react",
+      key: "motions",
       link: "/projects/motion",
       randomdelay: Math.random() * 0.5,
       randomdirection: Math.random() > 0.5 ? -100 : 100,
@@ -30,6 +33,7 @@ export default async function Git() {
     {
       name: "Coding",
       Libraries: "ChatGPT",
+      key: "coding",
       link: "/projects/code",
       randomdelay: Math.random() * 0.5,
       randomdirection: Math.random() > 0.5 ? -100 : 100,

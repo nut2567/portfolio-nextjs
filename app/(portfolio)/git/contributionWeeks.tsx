@@ -3,16 +3,10 @@
 import { motion } from "framer-motion";
 
 export default function ContributionWeeks({
-  repositories,
   contributionWeeks,
-  viewer,
 }: {
-  repositories: any;
   contributionWeeks: any[];
-  viewer: any;
 }) {
-  console.log(repositories, contributionWeeks, viewer);
-
   return (
     <div
       className="border rounded-lg shadow p-4 relative bg-[#0000003d] flex  flex-col items-start"

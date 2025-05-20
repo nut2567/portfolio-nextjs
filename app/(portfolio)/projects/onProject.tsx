@@ -1,16 +1,15 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import React, { useRef, useState, useEffect } from "react";
+import React, {
+  unstable_ViewTransition as ViewTransition,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import Link from "next/link";
-interface project {
-  link: string;
-  name: string;
-  Libraries: string;
-  randomdelay: number;
-  randomdirection: number;
-}
-const ProjectCard = ({ data }: { data: project[] }) => {
+import { Project } from "@/types/project";
+const ProjectCard = ({ data }: { data: Project[] }) => {
   const ref = useRef(null);
 
   // ตรวจสอบว่ากล่องอยู่ใน Viewport หรือไม่
@@ -46,11 +45,13 @@ const ProjectCard = ({ data }: { data: project[] }) => {
             <h2 className="text-xl font-semibold">{item.name}</h2>
             <p className="text-gray-400">Libraries: {item.Libraries}</p>
           </div>
-          <Link href={`${item.link}`}>
-            <div className="flex items-center p-2 btn btn-primary rounded justify-center">
-              <div className="flex">View Project</div>
-            </div>
-          </Link>
+          <ViewTransition name={item.key}>
+            <Link href={`${item.link}`}>
+              <button className="p-2 btn btn-primary rounded w-full">
+                View Project
+              </button>
+            </Link>
+          </ViewTransition>
         </motion.div>
       ))}
     </div>

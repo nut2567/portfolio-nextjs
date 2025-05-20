@@ -1,23 +1,35 @@
 "use client";
 import React, {
-  useState, useEffect, useMemo, createContext
+  useState,
+  useEffect,
+  useMemo,
+  createContext,
+  startTransition,
 } from "react";
 import { Card } from "./card";
 import dynamic from "next/dynamic";
 import { useRealTime } from "./useRealTime";
+import { motion, AnimatePresence } from "framer-motion";
 
-export const DataUseContext = createContext<any>(null);
+// Note on unstable_ViewTransition as ViewTransition from "react":
+// This component is primarily for Suspense-based transitions.
+// For DOM morphing effects (browser's View Transition API),
+// you'd use document.startViewTransition() around state updates.
+
+export const DataUseContext = createContext<{
+  hours: string;
+  minutes: string;
+  seconds: string;
+} | null>(null); // Typed context
 const Countdown = dynamic(() => import("./time"), { ssr: false });
 
 function CurrentTime() {
-
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     const timerId = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-
     return () => clearInterval(timerId);
   }, []);
 
@@ -45,74 +57,94 @@ const DigitalClockPage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsResized(true);
-      } else {
-        setIsResized(false);
-      }
+      startTransition(() => {
+        // Mark state update as a transition
+        if (window.scrollY > 0) {
+          setIsResized(true);
+        } else {
+          setIsResized(false);
+        }
+      });
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  // อัปเดตค่าของ Context ทุกวินาที
   useEffect(() => {
-    const timerId = setInterval(() => {
-      setTime({ hours, minutes, seconds });
-    }, 0);
-
-    return () => clearInterval(timerId); // Cleanup timer
+    // Update time state for context when hours, minutes, or seconds change
+    setTime({ hours, minutes, seconds });
   }, [hours, minutes, seconds]);
+
+  const scrollIndicatorVariants = {
+    hidden: { opacity: 0, y: 20, transition: { duration: 0.3 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+    bounce: {
+      y: ["0%", "-30%", "0%"],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
 
   return (
     <DataUseContext.Provider value={time}>
-      <div
+      <motion.div
         className={`flex justify-center border bg-gradient-to-r from-[#261139] via-indigo-500 to-[#4e1431] py-5 mb-5 
-        shadow relative transition-height duration-1000 ease-in-out 
+        shadow relative transition-all duration-700 ease-in-out 
         ${isResized ? "h-fit mt-56 " : "h-screen pt-20 md:pt-[250px] "}`}
         style={{ boxShadow: "rgba(0, 0, 0, 0.5) 0px -10px 60px inset" }}
       >
         <Card
-          className="h-fit md:p-8 p-2 pb-8 pt-4 shadow-2xl rounded-3xl bg-[#303640] bg-opacity-80 backdrop-blur-md"
+          className="h-fit md:p-8 p-2 pb-8 pt-4 shadow-2xl rounded-3xl bg-[#303640] bg-opacity-80 backdrop-blur-md z-10" // Added z-10
           style={{ boxShadow: "#6366a1 0px -5px 40px inset" }}
         >
           <div className="flex flex-col items-center justify-center">
-            <div className="text-4xl font-extrabold text-gray-500 animate-pulse">
+            <motion.div // Example: replacing animate-pulse with framer-motion
+              className="text-4xl font-extrabold text-gray-500"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
               <CurrentTime />
-            </div>
+            </motion.div>
             <div className="my-5 ">
               <Countdown />
             </div>
           </div>
         </Card>
-        {/* <TimerCircle /> */}
-        {!isResized && (
-          <nav
-            className="flex justify-center border-b border-b-foreground/10 h-16 z-40 absolute inset-x-[48%] 
-        bottom-[80px] items-center"
-          >
-            <div className="w-full flex font-semibold items-center text-sm">
-              <div className="transition-transform duration-1000 animate-bounce  justify-between md:m-[-20px] sm:m-[-20px]">
+
+        <AnimatePresence>
+          {!isResized && (
+            <motion.nav
+              className="flex justify-center border-b border-b-foreground/10 h-16 z-0 absolute inset-x-0 md:inset-x-[48%] bottom-[80px] items-center" // Centered inset-x-0 for small screens
+              variants={scrollIndicatorVariants}
+              initial="hidden"
+              animate={["visible", "bounce"]}
+              exit="hidden" // Use hidden variant for exit animation
+            >
+              <div className="w-full flex flex-col items-center font-semibold text-sm">
                 <p className="m-[5px]">Scroll</p>
                 <i
-                  className={` material-icons  items-center flex`}
+                  className="material-icons" // Removed items-center flex from here
                   style={{ fontSize: "48px" }}
                 >
                   keyboard_double_arrow_down
                 </i>
               </div>
-            </div>
-          </nav>
-        )}
-      </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </DataUseContext.Provider>
   );
 };
-
 
 export default DigitalClockPage;

@@ -1,14 +1,14 @@
-// components/Repositories.tsx (Client Component)
-'use client'
-import React from 'react'
+import React from "react";
 
 export default function Repositories({
   repositories,
-  data, projects
+  data,
+  projects,
 }: {
-  repositories: any[],
-  data: any, projects: any[]
+  repositories: any[];
+  data: any;
+  projects: any[];
 }) {
-  console.log(repositories, data, projects)
-  return <div className="contributions-grid"></div>
+  console.log(repositories, data, projects);
+  return <div className="contributions-grid"></div>;
 }

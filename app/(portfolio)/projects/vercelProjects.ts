@@ -5,12 +5,13 @@ const vercelProjects = async () => {
       headers: {
         Authorization: `Bearer ${process.env.vercel_token}`,
       },
+      next: { revalidate: 36000 }, // Add revalidation
     });
     const data = await response.json();
-    console.log(
-      "vercelProjectsData >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      data
-    );
+    // console.log(
+    //   "vercelProjectsData >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+    //   data
+    // );
     projects = data.projects || []; // ตรวจสอบว่า data.projects มีอยู่ไหม
   } catch (error) {
     console.error("Error fetching projects:", error);
