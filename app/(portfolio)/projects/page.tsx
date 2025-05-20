@@ -1,5 +1,8 @@
-import { Key, Suspense } from "react";
-import Loading from "../git/loading";
+import {
+  unstable_ViewTransition as ViewTransition,
+  Key,
+  Suspense,
+} from "react";
 import Image from "next/image";
 import Repositories from "./repositories";
 import ProjectCard, { Project } from "./ProjectCard";
@@ -35,30 +38,31 @@ export default async function Git() {
 
   return (
     <div>
-      <Suspense>
-        <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
-          <ul className="list-none space-y-2 flex items-center gap-4">
-            <div className="mx-5">
+      <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
+        <ul className="list-none space-y-2 flex items-center gap-4">
+          <div className="mx-5">
+            <ViewTransition name={`nutimage`}>
               <Image
                 className="rounded-full"
                 src="/images/nut.jpg"
                 alt="me"
-                width={50} // กำหนดความกว้างของรูปภาพ
                 height={0} // ปล่อยค่า height เป็น auto โดย Next.js จะจัดการเอง
-                style={{ width: "100%", height: "auto" }} // กำหนดให้ความสูงปรับตามสัดส่วนของภาพ
+                width={150}
                 priority // ใช้ให้ Next.js โหลดภาพนี้เป็น priority
               />
-            </div>
-            <h1 className="text-3xl font-bold mb-4">Projects</h1>
-          </ul>
-        </div>
-        <div className="container mx-auto p-4">
-          <div className=" flex">
-            <h1 className="text-xl font-bold text-blue-200 mb-5">
-              Project on this {data.length} projects
-            </h1>
+            </ViewTransition>
           </div>
+          <h1 className="text-3xl font-bold mb-4">Projects</h1>
+        </ul>
+      </div>
+      <div className="container mx-auto p-4">
+        <div className=" flex">
+          <h1 className="text-xl font-bold text-blue-200 mb-5">
+            Project on this {data.length} projects
+          </h1>
         </div>
+      </div>
+      <Suspense>
         <OnProject data={data} />
         <div className="container mx-auto p-4">
           <div className="container mx-auto p-4">

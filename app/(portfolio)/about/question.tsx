@@ -1,7 +1,6 @@
 import React from "react";
 
-export default function Question({ repositories }: { repositories: any[] }) {
-  console.log(repositories);
+export default function Question() {
   return (
     <div
       className="border  text-sm md:text-xl rounded-lg shadow p-4 relative bg-[#0000003d] "
@@ -26,9 +25,7 @@ export default function Question({ repositories }: { repositories: any[] }) {
       <div className="collapse collapse-plus bg-base-200 mb-4">
         <input type="radio" name="my-accordion-3" />
         <div className="collapse-title  font-medium">
-          <h1 className=" font-bold text-blue-200 mb-5">
-            เงินเดือนที่คาดหวัง
-          </h1>
+          <h1 className=" font-bold text-blue-200 mb-5">เงินเดือนที่คาดหวัง</h1>
         </div>
         <div className="collapse-content">
           <p>30000-40000 ต่อรองได้ (01/01/68)</p>
@@ -170,7 +167,9 @@ export default function Question({ repositories }: { repositories: any[] }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="btn btn-primary">learning-management-system</button>
+              <button className="btn btn-primary">
+                learning-management-system
+              </button>
             </a>
             <a
               className="mr-2"
@@ -186,9 +185,11 @@ export default function Question({ repositories }: { repositories: any[] }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="btn btn-primary">point-system-backoffice</button>
-            </a></div>
-
+              <button className="btn btn-primary">
+                point-system-backoffice
+              </button>
+            </a>
+          </div>
           user admin:1234
           <p>
             การใช้หลายวิธีนี้ช่วยให้ผมสามารถติดตามเทรนด์และเข้าใจการเปลี่ยนแปลงในวงการได้ดีขึ้น

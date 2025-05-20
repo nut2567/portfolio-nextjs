@@ -1,5 +1,8 @@
-import { Key, Suspense } from "react";
-import Loading from "./loading";
+import {
+  unstable_ViewTransition as ViewTransition,
+  Key,
+  Suspense,
+} from "react";
 import Image from "next/image";
 import Repositories from "./repositories";
 import ContributionWeeks from "./contributionWeeks";
@@ -187,33 +190,32 @@ export default async function Git() {
 
   return (
     <div className="rounded-lg md:px-12 px-2">
-      <Suspense fallback={<Loading />}>
-        <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
-          <ul className="list-none flex flex-col md:flex-row items-center gap-4">
-            <div className="mx-5">
+      <div className="bg-gray-800 text-white w-full py-6 rounded-lg text-xl mb-4">
+        <ul className="list-none flex flex-col md:flex-row items-center gap-4">
+          <div className="mx-5">
+            <ViewTransition name={`nutimage`}>
               <Image
                 className="rounded-full"
                 src="/images/nut.jpg"
                 alt="me"
-                width={50}
+                width={150}
                 height={0}
-                style={{ width: "100%", height: "auto" }}
                 priority
               />
-            </div>
-            <h1 className="text-xl font-bold text-blue-400">
-              Repositories for {viewer?.login}
-            </h1>
-            <h1>{processedRepositories.length} repositories</h1>
-            <h1>{totalContributions} contributions this year</h1>
-          </ul>
-        </div>
-        <ContributionWeeks
-          repositories={processedRepositories}
-          contributionWeeks={contributionWeeks ?? []}
-          viewer={viewer}
-        />
-      </Suspense>
+            </ViewTransition>
+          </div>
+          <h1 className="text-xl font-bold text-blue-400">
+            Repositories for {viewer?.login}
+          </h1>
+          <h1>{processedRepositories.length} repositories</h1>
+          <h1>{totalContributions} contributions this year</h1>
+        </ul>
+      </div>
+      <ContributionWeeks
+        repositories={processedRepositories}
+        contributionWeeks={contributionWeeks ?? []}
+        viewer={viewer}
+      />
       <Suspense>
         <Repositories repositoriesWithWatchers={processedRepositories} />
       </Suspense>
