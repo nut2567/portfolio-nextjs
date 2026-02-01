@@ -14,12 +14,9 @@ export default function Question() {
           </h1>
         </div>
         <div className="collapse-content">
-          <p>1.FrontEnd Developer</p>
-          <p>2.Software Engineer</p>
+          <p>1.FrontEnd Developer (JavaScript/NextJs)</p>
+          <p>2.Software Engineer (NodeJs)</p>
           <p>3.Full Strack main front</p>
-          <p>JavaScript/NextJs/NuxtJs/Angular</p>
-          <p>NodeJs Express.js</p>
-          <p>PostgreSQL Mongoose</p>
         </div>
       </div>
       <div className="collapse collapse-plus bg-base-200 mb-4">
@@ -28,7 +25,7 @@ export default function Question() {
           <h1 className=" font-bold text-blue-200 mb-5">เงินเดือนที่คาดหวัง</h1>
         </div>
         <div className="collapse-content">
-          <p>30000-40000 ต่อรองได้ (01/01/68)</p>
+          <p>45000-50000 ต่อรองได้ (01/02/69)</p>
         </div>
       </div>
 
