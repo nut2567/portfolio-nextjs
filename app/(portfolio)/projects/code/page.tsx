@@ -1,4 +1,4 @@
-import React, { unstable_ViewTransition as ViewTransition } from "react";
+import React, { ViewTransition } from "react";
 
 type Props = {};
 

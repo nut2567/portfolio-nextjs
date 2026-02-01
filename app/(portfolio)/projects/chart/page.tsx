@@ -1,7 +1,7 @@
 import ChartComponent from "@/app/(portfolio)/projects/chart/chartjs";
 import PopulationGrowthGraph from "@/app/(portfolio)/projects/chart/chartperyear";
 import Chartlegend from "@/app/(portfolio)/projects/chart/chartlegend";
-import React, { unstable_ViewTransition as ViewTransition } from "react";
+import React, { ViewTransition } from "react";
 import Link from "next/link";
 
 export default function PageChart() {

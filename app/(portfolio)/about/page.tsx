@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Question from "./question";
-import { unstable_ViewTransition as ViewTransition } from "react";
 import DownloadPdfButton from "./DownloadPdfButton";
+import { ViewTransition } from "react";
 
 export default function About() {
   return (
@@ -16,14 +16,17 @@ export default function About() {
         >
           <ul className="list-none space-y-4 md:space-y-0 md:flex md:space-x-4">
             <div className="w-full md:w-1/3 max-w-72 ">
-              <ViewTransition name={`nutimage`}>
+              <ViewTransition name="nutimage">
                 <Image
                   className=""
                   src="/images/nut.jpg"
                   alt="me"
                   width={300}
                   height={0}
-                  style={{ width: "100%", height: "auto" }}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                  }}
                   priority
                 />
               </ViewTransition>

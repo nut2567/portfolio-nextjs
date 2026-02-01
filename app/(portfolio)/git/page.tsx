@@ -1,8 +1,4 @@
-import {
-  unstable_ViewTransition as ViewTransition,
-  Key,
-  Suspense,
-} from "react";
+import { Suspense } from "react";
 import Image from "next/image";
 import Repositories from "./repositories";
 import ContributionWeeks from "./contributionWeeks";
