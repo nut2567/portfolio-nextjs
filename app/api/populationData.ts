@@ -82,7 +82,6 @@ export async function fetchAllowedCountries() {
             body: JSON.stringify({ query }),
         })
         const countries = await response.json();
-        console.log(`Countries: ${countries}`);
         allowedCountries = ["World", ...countries.data.countries.map((country: any) => country.name)]; // เพิ่ม World ไว้ใน allowedCountries
     }
 }

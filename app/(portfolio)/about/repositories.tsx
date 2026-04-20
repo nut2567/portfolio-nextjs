@@ -3,10 +3,9 @@
 import React from 'react'
 
 export default function Repositories({
-  repositories,
+  repositories: _repositories,
 }: {
   repositories: any[]
 }) {
-  console.log(repositories)
   return <div className="contributions-grid"></div>
 }
