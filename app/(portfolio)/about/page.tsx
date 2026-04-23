@@ -16,7 +16,7 @@ export default function About() {
         >
           <ul className="list-none space-y-4 md:space-y-0 md:flex md:space-x-4">
             <div className="w-full md:w-1/3 max-w-72 ">
-              <ViewTransition name="nutimage">
+              <ViewTransition name="nutimage-about">
                 <Image
                   className=""
                   src="/images/nut.jpg"

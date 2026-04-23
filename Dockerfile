@@ -1,18 +1,69 @@
-# เลือก Node.js เวอร์ชัน 20
-FROM node:20
+# syntax=docker.io/docker/dockerfile:1
 
-# ตั้ง working directory ภายใน container
+# ============================================
+# Stage 1: Install dependencies
+# ============================================
+FROM oven/bun:1 AS deps
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
+
 WORKDIR /app
 
-# คัดลอกไฟล์ package.json และ lock file
-COPY package*.json ./
+# Copy package files
+COPY package.json bun.lock ./
 
-# ติดตั้ง dependencies
-RUN npm install
+# Install dependencies
+RUN bun install --frozen-lockfile
 
-# คัดลอกไฟล์โปรเจกต์ทั้งหมด
+# ============================================
+# Stage 2: Build the application
+# ============================================
+FROM oven/bun:1 AS builder
+
+WORKDIR /app
+
+# Copy dependencies from deps stage
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# รันคำสั่งเพื่อเริ่มเซิร์ฟเวอร์
-CMD ["npm", "run", "dev"]
 
+# Build the Next.js application
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN bun run build
+
+# ============================================
+# Stage 3: Production runtime
+# ============================================
+FROM oven/bun:1-slim AS runner
+
+WORKDIR /app
+
+# Set production environment
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV TZ=Asia/Bangkok
+
+# Install curl for healthchecks and create non-root user
+RUN apt-get update && apt-get install -y curl --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* && \
+    groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 --gid nodejs nextjs
+
+# Copy necessary files from builder
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Switch to non-root user
+USER nextjs
+
+# Expose the application port
+EXPOSE 3055
+
+# Set the port environment variable
+ENV PORT=3055
+ENV HOSTNAME="0.0.0.0"
+
+# Start the application
+CMD ["bun", "server.js"]

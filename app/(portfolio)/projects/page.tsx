@@ -34,6 +34,14 @@ export default async function Git() {
       randomdelay: Math.random() * 0.5,
       randomdirection: Math.random() > 0.5 ? -100 : 100,
     },
+    {
+      name: "Thailand Map Dashboard",
+      Libraries: "ECharts + GeoJSON",
+      key: "thailand-map",
+      link: "/projects/thailand-map",
+      randomdelay: Math.random() * 0.5,
+      randomdirection: Math.random() > 0.5 ? -100 : 100,
+    },
   ];
 
   return (
