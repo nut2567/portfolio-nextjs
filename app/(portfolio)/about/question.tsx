@@ -171,21 +171,6 @@ export default function Question() {
         </div>
       </div>
 
-      <div className="collapse collapse-plus bg-base-200 mb-4">
-        <input type="radio" name="my-accordion-3" />
-        <div className="collapse-title">
-          <h1 className="font-bold text-blue-200 mb-5">
-            วิธีการติดตามเทรนด์และเทคโนโลยีใหม่?
-          </h1>
-        </div>
-        <div className="collapse-content">
-          <p>
-            ติดตามจาก Documentation Official, YouTube, Blog, Meetup, Online
-            Course ช���ว��ให้พร้อมปรับตัวกับเทคโนโลยีใหม่ๆ ได้รวดเร็ว
-          </p>
-        </div>
-      </div>
-
       <TopicSection title="JavaScript Fundamentals" icon="📚">
         <TopicCard
           title="HOF (Higher-Order Function)"

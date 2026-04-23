@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 import * as echarts from "echarts";
-import type { ECharts, EChartsOption } from "echarts";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { EChartsOption } from "echarts";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   geoMapData,
   provinceNameMap,
@@ -25,15 +25,14 @@ type ProvincePopover = {
   y: number;
 };
 
-type ChartProvinceData = {
-  id?: number | string;
+type MapEventPayload = {
   name?: string;
   value?: unknown;
-};
-
-type EChartClickParams = {
-  data?: ChartProvinceData;
-  name?: string;
+  data?: {
+    id?: unknown;
+    name?: string;
+    value?: unknown;
+  };
   event?: {
     offsetX?: number;
     offsetY?: number;
@@ -42,11 +41,10 @@ type EChartClickParams = {
 
 const MAP_NAME = "portfolio-thailand";
 const MAP_MAX_VALUE = 20;
+const MAP_COLORS = ["#deebf7", "#3182bd"];
+const ACTIVE_COLOR = "#ff0000";
 const POPOVER_WIDTH = 340;
 const POPOVER_HEIGHT = 320;
-const MAP_COLORS = ["#deebf7", "#3182bd"];
-const ACTIVE_COLOR = "red";
-const POPOVER_ACCENT = "#722ED1";
 
 const numberFormatter = new Intl.NumberFormat("th-TH");
 
@@ -64,8 +62,7 @@ const normalizeNumber = (value: unknown) => {
   }
 
   if (Array.isArray(value)) {
-    const lastValue = value.at(-1);
-    return normalizeNumber(lastValue);
+    return normalizeNumber(value.at(-1));
   }
 
   return 0;
@@ -100,11 +97,8 @@ const ProvincePopoverCard = ({
     <div className="w-full rounded-3xl border border-[#d7c3ff] bg-[#f1e3fd] p-5 text-slate-900 shadow-2xl shadow-black/20">
       <div className="mb-4 flex items-start gap-3">
         <div>
-          <p
-            className="text-sm font-semibold"
-            style={{ color: POPOVER_ACCENT }}
-          >
-            จังหวัด{province.displayName}
+          <p className="text-sm font-semibold text-[#722ED1]">
+            Province {province.displayName}
           </p>
         </div>
         <button
@@ -112,17 +106,13 @@ const ProvincePopoverCard = ({
           onClick={onClose}
           type="button"
         >
-          ปิด
+          Close
         </button>
       </div>
 
       <div className="mb-2 grid grid-cols-[1fr_auto] gap-x-6 text-sm font-semibold">
-        <span style={{ color: POPOVER_ACCENT, textDecoration: "underline" }}>
-          หน่วยงาน
-        </span>
-        <span style={{ color: POPOVER_ACCENT, textDecoration: "underline" }}>
-          ตำแหน่งว่าง
-        </span>
+        <span className="text-[#722ED1] underline">Agency</span>
+        <span className="text-[#722ED1] underline">Vacancies</span>
       </div>
 
       <div className="grid max-h-64 gap-2 overflow-y-auto pr-1 text-sm">
@@ -144,8 +134,6 @@ const ProvincePopoverCard = ({
 
 const ThailandMapViewer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const chartInstanceRef = useRef<ECharts | null>(null);
-
   const [isMapReady, setIsMapReady] = useState(
     Boolean(echarts.getMap(MAP_NAME)),
   );
@@ -176,8 +164,8 @@ const ThailandMapViewer = () => {
 
       return {
         id: normalizeNumber(province.id),
-        displayName,
         name: englishByThai[displayName] ?? province.name,
+        displayName,
         value: normalizeNumber(province.value),
         agencies: province.agencies.map((agency) => ({
           name: decodeIfNeeded(agency.name),
@@ -186,15 +174,6 @@ const ThailandMapViewer = () => {
       };
     });
   }, [decodedProvinceNameMap]);
-
-  const chartData = useMemo<ProvincePoint[]>(
-    () =>
-      provinceMetrics.map((province) => ({
-        ...province,
-        agencies: province.agencies.map((agency) => ({ ...agency })),
-      })),
-    [provinceMetrics],
-  );
 
   const provinceIndexes = useMemo(() => {
     const byId = new Map<number, ProvincePoint>();
@@ -210,12 +189,38 @@ const ThailandMapViewer = () => {
     return { byId, byEnglishName, byThaiName };
   }, [provinceMetrics]);
 
+  const resolveProvince = (payload: Pick<MapEventPayload, "name" | "data">) => {
+    const payloadId = normalizeNumber(payload.data?.id);
+    if (provinceIndexes.byId.has(payloadId)) {
+      return provinceIndexes.byId.get(payloadId) ?? null;
+    }
+
+    const names = [
+      payload.name,
+      payload.data?.name,
+      typeof payload.name === "string"
+        ? decodeIfNeeded(payload.name)
+        : undefined,
+      typeof payload.data?.name === "string"
+        ? decodeIfNeeded(payload.data.name)
+        : undefined,
+    ].filter((value): value is string => Boolean(value));
+
+    for (const name of names) {
+      if (provinceIndexes.byEnglishName.has(name)) {
+        return provinceIndexes.byEnglishName.get(name) ?? null;
+      }
+
+      if (provinceIndexes.byThaiName.has(name)) {
+        return provinceIndexes.byThaiName.get(name) ?? null;
+      }
+    }
+
+    return null;
+  };
+
   const totalVacancies = useMemo(
-    () =>
-      provinceMetrics.reduce(
-        (sum, province) => sum + normalizeNumber(province.value),
-        0,
-      ),
+    () => provinceMetrics.reduce((sum, province) => sum + province.value, 0),
     [provinceMetrics],
   );
 
@@ -223,32 +228,46 @@ const ThailandMapViewer = () => {
     if (provinceMetrics.length === 0) {
       return {
         id: 0,
-        displayName: "-",
         name: "-",
+        displayName: "-",
         value: 0,
         agencies: [],
       } satisfies ProvincePoint;
     }
 
     return provinceMetrics.reduce((currentTop, province) =>
-      normalizeNumber(province.value) > normalizeNumber(currentTop.value)
-        ? province
-        : currentTop,
+      province.value > currentTop.value ? province : currentTop,
     );
   }, [provinceMetrics]);
+
+  const chartData = useMemo(
+    () =>
+      provinceMetrics.map((province) => ({
+        id: province.id,
+        name: province.name,
+        value: province.value,
+      })),
+    [provinceMetrics],
+  );
 
   const option = useMemo<EChartsOption>(
     () => ({
       backgroundColor: "transparent",
       tooltip: {
         show: true,
-        formatter: (params: { name?: string; value?: unknown }) => {
-          const thaiName =
-            (params.name && decodedProvinceNameMap[params.name]) ||
+        formatter: (payload: unknown) => {
+          const params = payload as MapEventPayload;
+          const province = resolveProvince(params);
+          const displayName =
+            province?.displayName ||
+            (params.name ? decodedProvinceNameMap[params.name] : undefined) ||
             params.name ||
             "-";
-          const value = numberFormatter.format(normalizeNumber(params.value));
-          return `${thaiName} ${value} ตำแหน่ง`;
+          const rawValue =
+            province?.value ?? params.data?.value ?? params.value;
+          const value = numberFormatter.format(normalizeNumber(rawValue));
+
+          return `${displayName} ${value} ตำแหน่ง`;
         },
         backgroundColor: "#ffffff",
         borderColor: "#e2e8f0",
@@ -309,7 +328,7 @@ const ThailandMapViewer = () => {
         },
       ],
     }),
-    [chartData, decodedProvinceNameMap],
+    [chartData, decodedProvinceNameMap, provinceIndexes],
   );
 
   useEffect(() => {
@@ -349,64 +368,29 @@ const ThailandMapViewer = () => {
     };
   }, []);
 
-  const resolveProvince = useCallback(
-    (params: EChartClickParams) => {
-      const provinceId = normalizeNumber(params.data?.id);
-      if (provinceIndexes.byId.has(provinceId)) {
-        return provinceIndexes.byId.get(provinceId) ?? null;
+  const handleProvinceClick = (payload: unknown) => {
+    const params = payload as MapEventPayload;
+    const province = resolveProvince(params);
+    if (!province) {
+      return;
+    }
+
+    const bounds = containerRef.current?.getBoundingClientRect();
+    const maxX = Math.max((bounds?.width ?? 0) - POPOVER_WIDTH - 16, 16);
+    const maxY = Math.max((bounds?.height ?? 0) - POPOVER_HEIGHT - 16, 16);
+
+    setPopover((currentPopover) => {
+      if (currentPopover?.province.id === province.id) {
+        return null;
       }
 
-      const candidateNames = [
-        params.name,
-        params.data?.name,
-        typeof params.name === "string"
-          ? decodeIfNeeded(params.name)
-          : undefined,
-        typeof params.data?.name === "string"
-          ? decodeIfNeeded(params.data.name)
-          : undefined,
-      ].filter((value): value is string => Boolean(value));
-
-      for (const name of candidateNames) {
-        if (provinceIndexes.byEnglishName.has(name)) {
-          return provinceIndexes.byEnglishName.get(name) ?? null;
-        }
-
-        if (provinceIndexes.byThaiName.has(name)) {
-          return provinceIndexes.byThaiName.get(name) ?? null;
-        }
-      }
-
-      return null;
-    },
-    [provinceIndexes],
-  );
-
-  const handleProvinceClick = useCallback(
-    (params: EChartClickParams) => {
-      const province = resolveProvince(params);
-      if (!province) {
-        return;
-      }
-
-      const bounds = containerRef.current?.getBoundingClientRect();
-      const maxX = Math.max((bounds?.width ?? 0) - POPOVER_WIDTH - 16, 16);
-      const maxY = Math.max((bounds?.height ?? 0) - POPOVER_HEIGHT - 16, 16);
-
-      setPopover((currentPopover) => {
-        if (currentPopover?.province.id === province.id) {
-          return null;
-        }
-
-        return {
-          province,
-          x: clamp((params.event?.offsetX ?? 0) + 20, 16, maxX),
-          y: clamp(params.event?.offsetY ?? 0, 16, maxY),
-        };
-      });
-    },
-    [resolveProvince],
-  );
+      return {
+        province,
+        x: clamp((params.event?.offsetX ?? 0) + 20, 16, maxX),
+        y: clamp(params.event?.offsetY ?? 0, 16, maxY),
+      };
+    });
+  };
 
   if (loadError) {
     return (
@@ -434,19 +418,18 @@ const ThailandMapViewer = () => {
           <p className="mt-3 text-4xl font-semibold">
             {numberFormatter.format(totalVacancies)}
           </p>
-          <p className="mt-2 text-sm text-slate-400">จำนวนตำแหน่งว่างรวม</p>
+          <p className="mt-2 text-sm text-slate-400">Total vacancies</p>
         </div>
 
         <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-5 text-slate-100">
           <p className="text-sm uppercase tracking-[0.3em] text-sky-300/70">
-            จังหวัดสูงสุด
+            Top Province
           </p>
           <p className="mt-3 text-2xl font-semibold">
             {topProvince.displayName}
           </p>
           <p className="mt-2 text-sm text-slate-400">
-            {numberFormatter.format(normalizeNumber(topProvince.value))}{" "}
-            ตำแหน่งว่าง
+            {numberFormatter.format(topProvince.value)} vacancies
           </p>
         </div>
 
@@ -456,7 +439,7 @@ const ThailandMapViewer = () => {
           </p>
           <p className="mt-3 text-2xl font-semibold">Click Province</p>
           <p className="mt-2 text-sm text-slate-400">
-            กดที่จังหวัดเพื่อเปิด popover รายชื่อหน่วยงาน
+            Click a province to open its agency detail popover
           </p>
         </div>
       </div>
@@ -468,13 +451,15 @@ const ThailandMapViewer = () => {
               Thailand Map
             </p>
             <h2 className="text-2xl font-semibold text-white">
-              แสดงข้อมูลจำนวนตำแหน่งว่าง
+              Provincial Vacancy Overview
             </h2>
-            <p className="mt-1 text-sm text-slate-400">ภาพรวมกระทรวง</p>
+            <p className="mt-1 text-sm text-slate-400">
+              Imported from source dashboard data
+            </p>
           </div>
           <p className="max-w-xl text-sm text-slate-400">
-            ใช้ชุดข้อมูลเดียวกับหน้า dashboard ต้นทาง
-            และปรับสีของแผนที่ให้ตรงกับคอมโพเนนต์เดิม
+            Tooltip and popover now resolve against the same normalized province
+            dataset, so values stay consistent.
           </p>
         </div>
 
@@ -485,13 +470,6 @@ const ThailandMapViewer = () => {
           <ReactECharts
             option={option}
             style={{ height: "70vh", minHeight: 520, width: "100%" }}
-            onChartReady={(instance) => {
-              chartInstanceRef.current = instance;
-              instance.off("click");
-              instance.on("click", (params: unknown) => {
-                handleProvinceClick(params as EChartClickParams);
-              });
-            }}
             onEvents={{ click: handleProvinceClick }}
           />
 
